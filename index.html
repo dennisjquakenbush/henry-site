@@ -86,7 +86,6 @@ section{position:relative;z-index:3;padding:clamp(70px,10vw,150px) var(--edge)}
 .hero{position:relative;height:180vh;z-index:3}
 .hero-pin{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;padding-top:120px}
 #scene{position:absolute;inset:0;z-index:1;display:block;width:100%;height:100%}
-#scene *{vector-effect:non-scaling-stroke}
 .hero-scrim{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(180deg,rgba(244,238,225,.35) 0%,transparent 26%,transparent 68%,rgba(244,238,225,.5) 88%,var(--bg) 100%)}
 .hero-scrim.side{background:linear-gradient(90deg,rgba(244,238,225,.66) 0%,rgba(244,238,225,.2) 40%,transparent 72%)}
 .hero-divider{position:absolute;left:0;right:0;bottom:-1px;z-index:3;width:100%;display:block}
@@ -329,81 +328,7 @@ footer .top:hover{color:var(--sun)}
 <!-- HERO -->
 <header class="hero" id="top">
  <div class="hero-pin">
-  <svg id="scene" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-    <defs>
-      <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
-        <stop id="s0" offset="0" stop-color="#c2d3d6"/>
-        <stop id="s1" offset="0.42" stop-color="#e7dcc4"/>
-        <stop id="s2" offset="0.72" stop-color="#f2cfa0"/>
-        <stop id="s3" offset="1" stop-color="#eeb87e"/>
-      </linearGradient>
-      <radialGradient id="sunG" cx="50%" cy="50%" r="50%">
-        <stop offset="0" stop-color="#fff6de"/>
-        <stop offset="0.45" stop-color="#ffd89a" stop-opacity="0.55"/>
-        <stop offset="1" stop-color="#ffd89a" stop-opacity="0"/>
-      </radialGradient>
-      <linearGradient id="rockG" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#cb7c4c"/><stop offset="1" stop-color="#894727"/>
-      </linearGradient>
-      <filter id="sketch" x="-6%" y="-6%" width="112%" height="112%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.011" numOctaves="2" seed="7" result="n"/>
-        <feDisplacementMap in="SourceGraphic" in2="n" scale="7"/>
-      </filter>
-      <filter id="sketchT" x="-30%" y="-30%" width="160%" height="160%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="4" result="n"/>
-        <feDisplacementMap in="SourceGraphic" in2="n" scale="3"/>
-      </filter>
-    </defs>
-
-    <rect id="sky" width="1440" height="900" fill="url(#skyGrad)"/>
-
-    <g id="stars" opacity="0" fill="#fbeecb">
-      <circle cx="180" cy="120" r="2"/><circle cx="360" cy="80" r="1.5"/><circle cx="560" cy="150" r="2"/>
-      <circle cx="760" cy="90" r="1.6"/><circle cx="980" cy="140" r="2.2"/><circle cx="1180" cy="100" r="1.5"/>
-      <circle cx="1320" cy="170" r="2"/><circle cx="260" cy="230" r="1.4"/><circle cx="640" cy="250" r="1.6"/><circle cx="1080" cy="235" r="1.6"/>
-    </g>
-
-    <g id="sun" transform="translate(1010,300)">
-      <circle id="sunGlow" cx="0" cy="0" r="230" fill="url(#sunG)"/>
-      <circle id="sunDisc" cx="0" cy="0" r="66" fill="#fff2d0"/>
-    </g>
-
-    <g id="scenery" filter="url(#sketch)" stroke-linejoin="round" stroke-linecap="round">
-      <path d="M0,600 L0,505 L150,455 L300,505 L450,450 L620,510 L780,455 L940,510 L1110,455 L1280,505 L1440,470 L1440,600 Z" fill="#a3b7b3" stroke="#5c7168" stroke-width="2" opacity="0.9"/>
-      <path d="M0,640 L0,540 L120,455 L250,540 L380,450 L520,540 L660,435 L820,540 L980,455 L1140,540 L1300,460 L1440,530 L1440,640 Z" fill="#7d9585" stroke="#43574a" stroke-width="2.5"/>
-      <path d="M660,435 L638,470 L682,470 Z M380,450 L360,480 L400,480 Z M980,455 L960,485 L1000,485 Z" fill="#e8ddc8" opacity="0.85"/>
-      <path id="rock" d="" fill="url(#rockG)" stroke="#5e3320" stroke-width="2.5"/>
-      <path id="rockLines" d="" fill="none" stroke="#5e3320" stroke-width="1.4" opacity="0.35"/>
-    </g>
-
-    <rect id="dusk" width="1440" height="900" fill="#2b2a52" opacity="0"/>
-
-    <g id="truck" transform="translate(-360,700) scale(1.5)" filter="url(#sketchT)" stroke-linejoin="round" stroke-linecap="round">
-      <path id="beam" d="M90,-42 L176,-62 L176,-14 Z" fill="#ffe6a0" opacity="0"/>
-      <circle cx="-56" cy="-24" r="24" fill="#2a251d" stroke="#17130d" stroke-width="3"/>
-      <circle cx="-56" cy="-24" r="24" fill="none" stroke="#17130d" stroke-width="4" stroke-dasharray="3 6"/>
-      <circle cx="-56" cy="-24" r="8.5" fill="#e9dcc2" stroke="#17130d" stroke-width="2"/>
-      <circle cx="56" cy="-24" r="24" fill="#2a251d" stroke="#17130d" stroke-width="3"/>
-      <circle cx="56" cy="-24" r="24" fill="none" stroke="#17130d" stroke-width="4" stroke-dasharray="3 6"/>
-      <circle cx="56" cy="-24" r="8.5" fill="#e9dcc2" stroke="#17130d" stroke-width="2"/>
-      <path d="M-84,-24 L-84,-40 L-82,-40 L-82,-58 L-78,-64 L-74,-92 L46,-92 L60,-66 L82,-58 L88,-46 L88,-24 Z" fill="#f6efe1" stroke="#241f18" stroke-width="3.4"/>
-      <path d="M-80,-26 L82,-26" stroke="#241f18" stroke-width="3"/>
-      <path d="M-70,-90 L40,-90 L52,-68 L-70,-68 Z" fill="#46585f"/>
-      <path d="M46,-92 L60,-66" stroke="#241f18" stroke-width="3"/>
-      <path d="M-40,-90 L-40,-68 M6,-90 L6,-68 M40,-90 L48,-68" stroke="#f6efe1" stroke-width="5"/>
-      <path d="M-40,-90 L-40,-68 M6,-90 L6,-68 M40,-90 L48,-68" stroke="#241f18" stroke-width="1.8"/>
-      <path d="M-74,-92 L-74,-104 L44,-104 L44,-92" fill="none" stroke="#241f18" stroke-width="3"/>
-      <path d="M-56,-104 L-56,-92 M-30,-104 L-30,-92 M-4,-104 L-4,-92 M22,-104 L22,-92" stroke="#241f18" stroke-width="2"/>
-      <rect x="28" y="-110" width="16" height="5" rx="1.5" fill="#241f18"/>
-      <path d="M66,-28 L66,-90 Q66,-96 72,-96" fill="none" stroke="#241f18" stroke-width="4.5"/>
-      <path d="M-82,-28 A26,20 0 0 1 -30,-28" fill="none" stroke="#241f18" stroke-width="3"/>
-      <path d="M30,-28 A26,20 0 0 1 84,-28" fill="none" stroke="#241f18" stroke-width="3"/>
-      <rect x="84" y="-30" width="8" height="16" rx="1.5" fill="#cdbfa4" stroke="#241f18" stroke-width="2.5"/>
-      <path d="M82,-48 L88,-46 L88,-40 L82,-40 Z" fill="#ffd98a" stroke="#241f18" stroke-width="2"/>
-      <rect x="-92" y="-30" width="10" height="14" rx="1.5" fill="#cdbfa4" stroke="#241f18" stroke-width="2.5"/>
-      <path d="M-16,-62 L-16,-26 M-58,-58 L-58,-26" stroke="#241f18" stroke-width="1.6" opacity="0.55"/>
-    </g>
-  </svg>
+  <canvas id="scene"></canvas>
 
   <div class="hero-scrim"></div>
   <div class="hero-scrim side"></div>
@@ -714,68 +639,151 @@ if(TOUCH)document.body.classList.add('touch');
 document.getElementById('yr').textContent=new Date().getFullYear();
 
 /* ============================================================
-   SCROLL-DRIVEN SCENE — hand-drawn mountains, a setting sun,
-   and an LX470 crawling over the Utah slickrock
+   SCROLL-DRIVEN LOW-POLY 3D — a cream 1999 Lexus LX470 crawling
+   over a hill in Utah as the sun sets ("Over the Hill" simplicity)
    ============================================================ */
 (function(){
-  const scene=document.getElementById('scene');if(!scene)return;
+  const cv=document.getElementById('scene');if(!cv)return;
+  const ctx=cv.getContext('2d');
   const heroEl=document.getElementById('top');
-  const sky=[0,1,2,3].map(i=>document.getElementById('s'+i));
-  const sun=document.getElementById('sun'),sunDisc=document.getElementById('sunDisc'),sunGlow=document.getElementById('sunGlow');
-  const dusk=document.getElementById('dusk'),stars=document.getElementById('stars');
-  const truck=document.getElementById('truck'),beam=document.getElementById('beam');
-  const rock=document.getElementById('rock'),rockLines=document.getElementById('rockLines');
   const inner=document.querySelector('.hero-inner'),hint=document.querySelector('.scroll-hint');
+  let W=0,H=0,DPR=1;
+  function resize(){DPR=Math.min(window.devicePixelRatio||1,2);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);}
 
-  // rocky slickrock surface the truck rides on
-  function rockTop(x){return 706 - 30*Math.sin(x*0.0075+0.6) - 15*Math.sin(x*0.019+2.1) - 7*Math.sin(x*0.05);}
-  let d='M-40,900 L-40,'+rockTop(-40).toFixed(1),dl='';
-  for(let x=-40;x<=1480;x+=22){const y=rockTop(x).toFixed(1);d+=' L'+x+','+y;if(x%88===0)dl+=(dl?' ':'')+'M'+x+','+y+' l70,'+(rockTop(x+70)-rockTop(x)).toFixed(1);}
-  d+=' L1480,900 Z';rock.setAttribute('d',d);rockLines.setAttribute('d',dl);
-
-  const KEY={ // sky stops: morning / sunset / dusk
-    m:[[194,211,214],[231,220,196],[242,207,160],[238,184,126]],
-    s:[[244,184,120],[240,146,82],[233,104,58],[206,78,46]],
-    d:[[42,52,92],[74,58,99],[122,72,84],[150,70,52]]
-  };
-  const sunC={m:[255,242,208],s:[255,152,78],d:[220,78,46]};
+  // ---- math ----
+  const Vc=(x,y,z)=>({x,y,z});
+  const sub=(a,b)=>({x:a.x-b.x,y:a.y-b.y,z:a.z-b.z});
+  const cross=(a,b)=>({x:a.y*b.z-a.z*b.y,y:a.z*b.x-a.x*b.z,z:a.x*b.y-a.y*b.x});
+  const dot=(a,b)=>a.x*b.x+a.y*b.y+a.z*b.z;
+  const norm=a=>{const l=Math.hypot(a.x,a.y,a.z)||1;return{x:a.x/l,y:a.y/l,z:a.z/l};};
   const L=(a,b,t)=>a+(b-a)*t;
-  const mix=(a,b,t)=>`rgb(${Math.round(L(a[0],b[0],t))},${Math.round(L(a[1],b[1],t))},${Math.round(L(a[2],b[2],t))})`;
-  const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+  const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+  const hash=(i,j)=>{const s=Math.sin(i*12.9898+j*78.233)*43758.5453;return s-Math.floor(s);};
+  const LIGHT=norm(Vc(-0.45,0.82,-0.55));
+
+  // ---- terrain: a hill the truck climbs over ----
+  function ground(x){return 3.6*Math.exp(-(x*x)/38) + 0.6*Math.exp(-((x+8)*(x+8))/10) - 0.7;}
+
+  // ---- LX470 model (local space, wheels bottom at y=0, faces +X) ----
+  const CREAM=[230,222,203],GLASS=[44,56,64],TIRE=[33,29,26],HUB=[126,118,104],
+        TRIM=[74,70,63],GRILLE=[40,38,34],CHROME=[198,192,178],LIGHT2=[250,242,208],TAIL=[158,58,48];
+  function box(cx,cy,cz,sx,sy,sz,c,F){
+    const x0=cx-sx/2,x1=cx+sx/2,y0=cy-sy/2,y1=cy+sy/2,z0=cz-sz/2,z1=cz+sz/2;
+    const P=[Vc(x0,y0,z0),Vc(x1,y0,z0),Vc(x1,y1,z0),Vc(x0,y1,z0),Vc(x0,y0,z1),Vc(x1,y0,z1),Vc(x1,y1,z1),Vc(x0,y1,z1)];
+    [[0,1,2,3],[5,4,7,6],[4,0,3,7],[1,5,6,2],[3,2,6,7],[4,5,1,0]].forEach(f=>F.push({v:f.map(i=>P[i]),c}));
+  }
+  function wheelFaces(cx,cz,F){
+    const r=0.57,wz=0.44,seg=10,z0=cz-wz/2,z1=cz+wz/2;
+    let prev=null;
+    for(let i=0;i<=seg;i++){const a=i/seg*Math.PI*2;const x=cx+r*Math.cos(a),y=r+r*Math.sin(a);
+      const p0=Vc(x,y,z0),p1=Vc(x,y,z1);
+      if(prev)F.push({v:[prev[0],p0,p1,prev[1]],c:TIRE});
+      prev=[p0,p1];}
+    // hub caps
+    const zo=cz>0?z1:z0;const cap=[];for(let i=0;i<seg;i++){const a=i/seg*Math.PI*2;cap.push(Vc(cx+r*0.55*Math.cos(a),r+r*0.55*Math.sin(a),zo));}
+    F.push({v:cap,c:HUB});
+  }
+  function buildCar(){
+    const F=[];
+    wheelFaces(1.55,1.0,F);wheelFaces(1.55,-1.0,F);wheelFaces(-1.55,1.0,F);wheelFaces(-1.55,-1.0,F);
+    box(0,1.12,0, 4.5,0.98,1.9, CREAM,F);                 // lower body
+    box(-0.35,1.86,0, 2.7,0.72,1.76, CREAM,F);            // cabin
+    box(-0.35,1.9,0, 2.5,0.5,1.82, GLASS,F);              // greenhouse glass band
+    box(-0.35,2.2,0, 2.62,0.14,1.8, CREAM,F);             // roof
+    box(-0.35,2.3,0.74, 2.4,0.06,0.08, TRIM,F);           // roof rails
+    box(-0.35,2.3,-0.74, 2.4,0.06,0.08, TRIM,F);
+    box(2.34,0.9,0, 0.24,0.5,1.98, TRIM,F);               // front bumper
+    box(-2.34,0.9,0, 0.24,0.46,1.98, TRIM,F);             // rear bumper
+    box(2.28,1.16,0, 0.08,0.46,1.42, GRILLE,F);           // grille
+    box(2.31,1.26,0, 0.05,0.05,1.5, CHROME,F);            // chrome bars
+    box(2.31,1.08,0, 0.05,0.05,1.5, CHROME,F);
+    box(2.30,1.18,0.72, 0.06,0.34,0.5, LIGHT2,F);         // headlights
+    box(2.30,1.18,-0.72, 0.06,0.34,0.5, LIGHT2,F);
+    box(-2.32,1.32,0.82, 0.06,0.3,0.32, TAIL,F);          // taillights
+    box(-2.32,1.32,-0.82, 0.06,0.3,0.32, TAIL,F);
+    box(-0.35,1.5,0.955, 3.0,0.16,0.02, TRIM,F);          // body side trim
+    box(-0.35,1.5,-0.955, 3.0,0.16,0.02, TRIM,F);
+    return F;
+  }
+  const CAR=buildCar();
+
+  // ---- camera ----
+  function makeCam(pos,target,focal){const f=norm(sub(target,pos));const r=norm(cross(Vc(0,1,0),f));const u=cross(f,r);return{pos,f,r,u,focal};}
+  function project(p,cam){const rel=sub(p,cam.pos);const vz=dot(rel,cam.f);return{x:W/2+cam.focal*dot(rel,cam.r)/vz,y:H/2-cam.focal*dot(rel,cam.u)/vz,z:vz};}
+
+  // ---- sky / sun ----
+  const KEY={m:[[196,214,216],[228,214,190],[244,206,158],[240,186,128]],
+             s:[[246,188,124],[240,150,86],[232,104,58],[204,80,46]],
+             d:[[38,46,84],[70,54,96],[120,70,82],[150,68,50]]};
+  const sunC={m:[255,244,214],s:[255,156,82],d:[224,80,46]};
+  const rgb=a=>`rgb(${a[0]|0},${a[1]|0},${a[2]|0})`;
+  const mix3=(a,b,t)=>[L(a[0],b[0],t),L(a[1],b[1],t),L(a[2],b[2],t)];
+  function drawSky(p){
+    const first=p<0.5,t=first?p/0.5:(p-0.5)/0.5,A=first?KEY.m:KEY.s,B=first?KEY.s:KEY.d;
+    const g=ctx.createLinearGradient(0,0,0,H);
+    [0,.36,.66,1].forEach((o,i)=>g.addColorStop(o,rgb(mix3(A[i],B[i],t))));
+    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+    // stars
+    const sa=clamp((p-0.55)/0.4,0,1);
+    if(sa>0){ctx.fillStyle=`rgba(251,238,203,${sa})`;for(let i=0;i<40;i++){ctx.fillRect(hash(i,1)*W,hash(i,2)*H*0.5,hash(i,3)>0.8?2:1.3,hash(i,3)>0.8?2:1.3);}}
+    // sun
+    const first2=p<0.5,tt=first2?p/0.5:(p-0.5)/0.5;
+    const sc=mix3(first2?sunC.m:sunC.s,first2?sunC.s:sunC.d,tt);
+    const sx=W*L(0.72,0.5,p),sy=H*L(0.26,0.72,ease(p)),R=H*0.075;
+    const gl=ctx.createRadialGradient(sx,sy,0,sx,sy,H*0.4);
+    gl.addColorStop(0,`rgba(${sc[0]|0},${sc[1]|0},${sc[2]|0},${0.55*(1-0.4*p)})`);gl.addColorStop(0.5,`rgba(${sc[0]|0},${sc[1]|0},${sc[2]|0},0.12)`);gl.addColorStop(1,'transparent');
+    ctx.fillStyle=gl;ctx.fillRect(0,0,W,H);
+    ctx.beginPath();ctx.arc(sx,sy,R,0,6.283);ctx.fillStyle=rgb(sc);ctx.fill();
+  }
 
   function setScene(p){
-    const first=p<0.5,t=first?p/0.5:(p-0.5)/0.5;
-    const A=first?KEY.m:KEY.s,B=first?KEY.s:KEY.d;
-    for(let i=0;i<4;i++)sky[i].setAttribute('stop-color',mix(A[i],B[i],t));
-    sunDisc.setAttribute('fill',mix(first?sunC.m:sunC.s,first?sunC.s:sunC.d,t));
-    const sy=L(300,706,ease(p)),sx=L(1010,880,p);
-    sun.setAttribute('transform',`translate(${sx.toFixed(1)},${sy.toFixed(1)})`);
-    sunGlow.setAttribute('opacity',(1-0.55*p).toFixed(2));
-    dusk.setAttribute('opacity',(Math.pow(p,1.5)*0.32).toFixed(3));
-    stars.setAttribute('opacity',clamp((p-0.55)/0.4,0,1).toFixed(2));
-    const tx=L(-360,1000,ease(p)),ty=rockTop(tx);
-    const slope=Math.atan2(rockTop(tx+42)-rockTop(tx-42),84)*180/Math.PI;
-    truck.setAttribute('transform',`translate(${tx.toFixed(1)},${ty.toFixed(1)}) rotate(${slope.toFixed(2)}) scale(1.5)`);
-    if(beam)beam.setAttribute('opacity',clamp((p-0.5)/0.5*0.85,0,0.85).toFixed(2));
-    const fade=clamp(1-(p-0.16)/0.42,0,1);
-    if(inner)inner.style.opacity=fade;
-    if(hint)hint.style.opacity=fade;
+    drawSky(p);
+    const carX=L(-12,12,ease(p)),cy=ground(carX);
+    const dx=0.9,slope=(ground(carX+dx)-ground(carX-dx))/(2*dx),ca=Math.cos(Math.atan(slope)),sa=Math.sin(Math.atan(slope));
+    const faces=[];
+    // terrain strips following the ridge
+    const step=1.4,x0=Math.round((carX-17)/step)*step;
+    for(let x=x0;x<carX+18;x+=step){
+      for(let z=-9;z<9;z+=2.2){
+        const h=hash(Math.round(x*3.7),Math.round(z*3.1));
+        const c=[178+h*26-13,120+h*22-11,74+h*20-10];
+        faces.push({v:[Vc(x,ground(x),z),Vc(x+step,ground(x+step),z),Vc(x+step,ground(x+step),z+2.2),Vc(x,ground(x),z+2.2)],c});
+      }
+    }
+    // car (local -> world: pitch about Z, then translate onto hill)
+    for(const f of CAR){
+      const wv=f.v.map(pt=>Vc(carX+(pt.x*ca-pt.y*sa),cy+(pt.x*sa+pt.y*ca),pt.z));
+      faces.push({v:wv,c:f.c});
+    }
+    // camera chases the truck
+    const cam=makeCam(Vc(carX-3.2,cy+4.0,-8.6),Vc(carX+0.7,cy+1.1,0),H*1.12);
+    // project + shade + sort
+    const draw=[];
+    for(const f of faces){
+      const pr=f.v.map(pt=>project(pt,cam));
+      let bad=false,az=0;for(const q of pr){if(q.z<0.2){bad=true;break;}az+=q.z;}
+      if(bad)continue;az/=pr.length;
+      let n=norm(cross(sub(f.v[1],f.v[0]),sub(f.v[2],f.v[0])));
+      const fc={x:(f.v[0].x+f.v[2].x)/2,y:(f.v[0].y+f.v[2].y)/2,z:(f.v[0].z+f.v[2].z)/2};
+      if(dot(n,sub(cam.pos,fc))<0)n={x:-n.x,y:-n.y,z:-n.z};
+      const sh=0.46+0.54*Math.max(0,dot(n,LIGHT));
+      draw.push({pr,az,col:`rgb(${f.c[0]*sh|0},${f.c[1]*sh|0},${f.c[2]*sh|0})`});
+    }
+    draw.sort((a,b)=>b.az-a.az);
+    for(const d of draw){ctx.beginPath();d.pr.forEach((q,i)=>i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y));ctx.closePath();ctx.fillStyle=d.col;ctx.fill();ctx.lineWidth=1;ctx.strokeStyle=d.col;ctx.stroke();}
+    // dusk mood + headlight glow
+    const dk=Math.pow(p,1.6)*0.30;if(dk>0){ctx.fillStyle=`rgba(30,26,54,${dk})`;ctx.fillRect(0,0,W,H);}
+    if(p>0.5){const hp=project(Vc(carX+2.6,cy+1.2,0),cam);if(hp.z>0.2){const bg=ctx.createRadialGradient(hp.x,hp.y,0,hp.x,hp.y,120);const a=(p-0.5)/0.5*0.5;bg.addColorStop(0,`rgba(255,235,170,${a})`);bg.addColorStop(1,'transparent');ctx.fillStyle=bg;ctx.fillRect(hp.x-140,hp.y-140,280,280);}}
+    const fade=clamp(1-(p-0.16)/0.42,0,1);if(inner)inner.style.opacity=fade;if(hint)hint.style.opacity=fade;
   }
 
   let ticking=false;
-  function tick(){
-    const rect=heroEl.getBoundingClientRect();
-    const total=heroEl.offsetHeight-window.innerHeight;
-    setScene(clamp(-rect.top/(total||1),0,1));
-    ticking=false;
-  }
-  if(RM){heroEl.style.height='100vh';setScene(0.32);}
-  else{
-    window.addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(tick);}},{passive:true});
-    window.addEventListener('resize',tick);
-    tick();
-  }
+  function tick(){const rect=heroEl.getBoundingClientRect();const total=heroEl.offsetHeight-window.innerHeight;setScene(clamp(-rect.top/(total||1),0,1));ticking=false;}
+  resize();
+  window.addEventListener('resize',()=>{resize();tick();});
+  if(RM){heroEl.style.height='100vh';setScene(0.34);}
+  else{window.addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(tick);}},{passive:true});tick();}
 })();
 
 /* LOADER */
