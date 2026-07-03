@@ -83,8 +83,10 @@ section{position:relative;z-index:3;padding:clamp(70px,10vw,150px) var(--edge)}
 .marker .idx{color:var(--ink-faint);font-family:var(--mono);font-weight:400}
 
 /* HERO */
-.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:120px;position:relative;overflow:hidden}
+.hero{position:relative;height:180vh;z-index:3}
+.hero-pin{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;padding-top:120px}
 #scene{position:absolute;inset:0;z-index:1;display:block;width:100%;height:100%}
+#scene *{vector-effect:non-scaling-stroke}
 .hero-scrim{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(180deg,rgba(244,238,225,.35) 0%,transparent 26%,transparent 68%,rgba(244,238,225,.5) 88%,var(--bg) 100%)}
 .hero-scrim.side{background:linear-gradient(90deg,rgba(244,238,225,.66) 0%,rgba(244,238,225,.2) 40%,transparent 72%)}
 .hero-divider{position:absolute;left:0;right:0;bottom:-1px;z-index:3;width:100%;display:block}
@@ -326,10 +328,85 @@ footer .top:hover{color:var(--sun)}
 
 <!-- HERO -->
 <header class="hero" id="top">
-  <canvas id="scene"></canvas>
+ <div class="hero-pin">
+  <svg id="scene" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop id="s0" offset="0" stop-color="#c2d3d6"/>
+        <stop id="s1" offset="0.42" stop-color="#e7dcc4"/>
+        <stop id="s2" offset="0.72" stop-color="#f2cfa0"/>
+        <stop id="s3" offset="1" stop-color="#eeb87e"/>
+      </linearGradient>
+      <radialGradient id="sunG" cx="50%" cy="50%" r="50%">
+        <stop offset="0" stop-color="#fff6de"/>
+        <stop offset="0.45" stop-color="#ffd89a" stop-opacity="0.55"/>
+        <stop offset="1" stop-color="#ffd89a" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="rockG" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#cb7c4c"/><stop offset="1" stop-color="#894727"/>
+      </linearGradient>
+      <filter id="sketch" x="-6%" y="-6%" width="112%" height="112%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.011" numOctaves="2" seed="7" result="n"/>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="7"/>
+      </filter>
+      <filter id="sketchT" x="-30%" y="-30%" width="160%" height="160%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="4" result="n"/>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="3"/>
+      </filter>
+    </defs>
+
+    <rect id="sky" width="1440" height="900" fill="url(#skyGrad)"/>
+
+    <g id="stars" opacity="0" fill="#fbeecb">
+      <circle cx="180" cy="120" r="2"/><circle cx="360" cy="80" r="1.5"/><circle cx="560" cy="150" r="2"/>
+      <circle cx="760" cy="90" r="1.6"/><circle cx="980" cy="140" r="2.2"/><circle cx="1180" cy="100" r="1.5"/>
+      <circle cx="1320" cy="170" r="2"/><circle cx="260" cy="230" r="1.4"/><circle cx="640" cy="250" r="1.6"/><circle cx="1080" cy="235" r="1.6"/>
+    </g>
+
+    <g id="sun" transform="translate(1010,300)">
+      <circle id="sunGlow" cx="0" cy="0" r="230" fill="url(#sunG)"/>
+      <circle id="sunDisc" cx="0" cy="0" r="66" fill="#fff2d0"/>
+    </g>
+
+    <g id="scenery" filter="url(#sketch)" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M0,600 L0,505 L150,455 L300,505 L450,450 L620,510 L780,455 L940,510 L1110,455 L1280,505 L1440,470 L1440,600 Z" fill="#a3b7b3" stroke="#5c7168" stroke-width="2" opacity="0.9"/>
+      <path d="M0,640 L0,540 L120,455 L250,540 L380,450 L520,540 L660,435 L820,540 L980,455 L1140,540 L1300,460 L1440,530 L1440,640 Z" fill="#7d9585" stroke="#43574a" stroke-width="2.5"/>
+      <path d="M660,435 L638,470 L682,470 Z M380,450 L360,480 L400,480 Z M980,455 L960,485 L1000,485 Z" fill="#e8ddc8" opacity="0.85"/>
+      <path id="rock" d="" fill="url(#rockG)" stroke="#5e3320" stroke-width="2.5"/>
+      <path id="rockLines" d="" fill="none" stroke="#5e3320" stroke-width="1.4" opacity="0.35"/>
+    </g>
+
+    <rect id="dusk" width="1440" height="900" fill="#2b2a52" opacity="0"/>
+
+    <g id="truck" transform="translate(-360,700) scale(1.5)" filter="url(#sketchT)" stroke-linejoin="round" stroke-linecap="round">
+      <path id="beam" d="M90,-42 L176,-62 L176,-14 Z" fill="#ffe6a0" opacity="0"/>
+      <circle cx="-56" cy="-24" r="24" fill="#2a251d" stroke="#17130d" stroke-width="3"/>
+      <circle cx="-56" cy="-24" r="24" fill="none" stroke="#17130d" stroke-width="4" stroke-dasharray="3 6"/>
+      <circle cx="-56" cy="-24" r="8.5" fill="#e9dcc2" stroke="#17130d" stroke-width="2"/>
+      <circle cx="56" cy="-24" r="24" fill="#2a251d" stroke="#17130d" stroke-width="3"/>
+      <circle cx="56" cy="-24" r="24" fill="none" stroke="#17130d" stroke-width="4" stroke-dasharray="3 6"/>
+      <circle cx="56" cy="-24" r="8.5" fill="#e9dcc2" stroke="#17130d" stroke-width="2"/>
+      <path d="M-84,-24 L-84,-40 L-82,-40 L-82,-58 L-78,-64 L-74,-92 L46,-92 L60,-66 L82,-58 L88,-46 L88,-24 Z" fill="#f6efe1" stroke="#241f18" stroke-width="3.4"/>
+      <path d="M-80,-26 L82,-26" stroke="#241f18" stroke-width="3"/>
+      <path d="M-70,-90 L40,-90 L52,-68 L-70,-68 Z" fill="#46585f"/>
+      <path d="M46,-92 L60,-66" stroke="#241f18" stroke-width="3"/>
+      <path d="M-40,-90 L-40,-68 M6,-90 L6,-68 M40,-90 L48,-68" stroke="#f6efe1" stroke-width="5"/>
+      <path d="M-40,-90 L-40,-68 M6,-90 L6,-68 M40,-90 L48,-68" stroke="#241f18" stroke-width="1.8"/>
+      <path d="M-74,-92 L-74,-104 L44,-104 L44,-92" fill="none" stroke="#241f18" stroke-width="3"/>
+      <path d="M-56,-104 L-56,-92 M-30,-104 L-30,-92 M-4,-104 L-4,-92 M22,-104 L22,-92" stroke="#241f18" stroke-width="2"/>
+      <rect x="28" y="-110" width="16" height="5" rx="1.5" fill="#241f18"/>
+      <path d="M66,-28 L66,-90 Q66,-96 72,-96" fill="none" stroke="#241f18" stroke-width="4.5"/>
+      <path d="M-82,-28 A26,20 0 0 1 -30,-28" fill="none" stroke="#241f18" stroke-width="3"/>
+      <path d="M30,-28 A26,20 0 0 1 84,-28" fill="none" stroke="#241f18" stroke-width="3"/>
+      <rect x="84" y="-30" width="8" height="16" rx="1.5" fill="#cdbfa4" stroke="#241f18" stroke-width="2.5"/>
+      <path d="M82,-48 L88,-46 L88,-40 L82,-40 Z" fill="#ffd98a" stroke="#241f18" stroke-width="2"/>
+      <rect x="-92" y="-30" width="10" height="14" rx="1.5" fill="#cdbfa4" stroke="#241f18" stroke-width="2.5"/>
+      <path d="M-16,-62 L-16,-26 M-58,-58 L-58,-26" stroke="#241f18" stroke-width="1.6" opacity="0.55"/>
+    </g>
+  </svg>
+
   <div class="hero-scrim"></div>
   <div class="hero-scrim side"></div>
-  <svg class="hero-divider" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0,90 L0,54 C220,26 420,74 720,50 C980,30 1180,70 1440,44 L1440,90 Z" fill="var(--bg)"/></svg>
   <div class="hero-inner">
     <div class="coords"><span class="pin">⌖</span> 39.77° N, 86.16° W · Indianapolis, IN <span style="color:var(--ink-faint)">—</span> turning spend into pipeline</div>
     <div class="hero-tag">Growth Marketing · Business Operations · Technology</div>
@@ -349,7 +426,8 @@ footer .top:hover{color:var(--sun)}
       <a href="mailto:henryjayq@icloud.com" class="btn btn-ghost" data-magnetic>Contact me</a>
     </div>
   </div>
-  <div class="scroll-hint"><span class="ln"></span>Scroll to explore</div>
+  <div class="scroll-hint"><span class="ln"></span>Scroll — watch the sun set</div>
+ </div>
 </header>
 
 <!-- ABOUT -->
@@ -636,112 +714,68 @@ if(TOUCH)document.body.classList.add('touch');
 document.getElementById('yr').textContent=new Date().getFullYear();
 
 /* ============================================================
-   DAWN LANDSCAPE — painterly layered ridges, mist & fireflies
+   SCROLL-DRIVEN SCENE — hand-drawn mountains, a setting sun,
+   and an LX470 crawling over the Utah slickrock
    ============================================================ */
 (function(){
-  const cv=document.getElementById('scene');const ctx=cv.getContext('2d');
-  let W=0,H=0,DPR=1,t=0,raf=0,running=true;
-  let mx=0.5,my=0.5,tmx=0.5,tmy=0.5;
+  const scene=document.getElementById('scene');if(!scene)return;
+  const heroEl=document.getElementById('top');
+  const sky=[0,1,2,3].map(i=>document.getElementById('s'+i));
+  const sun=document.getElementById('sun'),sunDisc=document.getElementById('sunDisc'),sunGlow=document.getElementById('sunGlow');
+  const dusk=document.getElementById('dusk'),stars=document.getElementById('stars');
+  const truck=document.getElementById('truck'),beam=document.getElementById('beam');
+  const rock=document.getElementById('rock'),rockLines=document.getElementById('rockLines');
+  const inner=document.querySelector('.hero-inner'),hint=document.querySelector('.scroll-hint');
 
-  function hash(x){const n=Math.sin(x*127.1)*43758.5453;return n-Math.floor(n);}
-  function sm(t){return t*t*(3-2*t);}
-  function n1(x){const xi=Math.floor(x),xf=x-xi;return hash(xi)*(1-sm(xf))+hash(xi+1)*sm(xf);}
-  function fbm(x){let a=0,amp=.5,f=1;for(let i=0;i<4;i++){a+=n1(x*f)*amp;f*=2;amp*=.5;}return a;}
+  // rocky slickrock surface the truck rides on
+  function rockTop(x){return 706 - 30*Math.sin(x*0.0075+0.6) - 15*Math.sin(x*0.019+2.1) - 7*Math.sin(x*0.05);}
+  let d='M-40,900 L-40,'+rockTop(-40).toFixed(1),dl='';
+  for(let x=-40;x<=1480;x+=22){const y=rockTop(x).toFixed(1);d+=' L'+x+','+y;if(x%88===0)dl+=(dl?' ':'')+'M'+x+','+y+' l70,'+(rockTop(x+70)-rockTop(x)).toFixed(1);}
+  d+=' L1480,900 Z';rock.setAttribute('d',d);rockLines.setAttribute('d',dl);
 
-  // back -> front
-  const LAYERS=[
-    {y:.52,amp:.05,rough:.006,seed:11,col:'#aebcbe',par:5},
-    {y:.585,amp:.06,rough:.008,seed:29,col:'#96aca8',par:9},
-    {y:.65,amp:.075,rough:.010,seed:53,col:'#7c9585',par:15},
-    {y:.72,amp:.085,rough:.013,seed:71,col:'#5f7d67',par:23},
-    {y:.80,amp:.095,rough:.016,seed:97,col:'#46624f',par:33},
-    {y:.89,amp:.11,rough:.020,seed:131,col:'#31493a',par:45}
-  ];
-  let flies=[];
-  function seedFlies(){flies=[];const n=TOUCH?24:46;for(let i=0;i<n;i++)flies.push({x:hash(i*3.1),y:.55+hash(i*7.7)*.42,r:.6+hash(i*5.3)*1.8,ph:hash(i*9.1)*6.28,sp:.02+hash(i*2.2)*.05,dr:.2+hash(i*4.4)*.6});}
+  const KEY={ // sky stops: morning / sunset / dusk
+    m:[[194,211,214],[231,220,196],[242,207,160],[238,184,126]],
+    s:[[244,184,120],[240,146,82],[233,104,58],[206,78,46]],
+    d:[[42,52,92],[74,58,99],[122,72,84],[150,70,52]]
+  };
+  const sunC={m:[255,242,208],s:[255,152,78],d:[220,78,46]};
+  const L=(a,b,t)=>a+(b-a)*t;
+  const mix=(a,b,t)=>`rgb(${Math.round(L(a[0],b[0],t))},${Math.round(L(a[1],b[1],t))},${Math.round(L(a[2],b[2],t))})`;
+  const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 
-  function resize(){DPR=Math.min(window.devicePixelRatio||1,1.6);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);}
-
-  function frame(){
-    if(!running){raf=requestAnimationFrame(frame);return;}
-    t+=0.006;
-    tmx+=(mx-tmx)*0.04;tmy+=(my-tmy)*0.04;
-    const px=(tmx-0.5),py=(tmy-0.5);
-
-    // sky
-    const sky=ctx.createLinearGradient(0,0,0,H);
-    sky.addColorStop(0,'#cdd7d7');sky.addColorStop(.34,'#e6d9c1');
-    sky.addColorStop(.55,'#f2cfa2');sky.addColorStop(.72,'#f3bd8c');sky.addColorStop(1,'#eab27e');
-    ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);
-
-    // sun
-    const sunx=W*0.5+px*60, suny=H*0.44+py*20;
-    const halo=ctx.createRadialGradient(sunx,suny,0,sunx,suny,H*0.42);
-    halo.addColorStop(0,'rgba(255,246,222,.95)');halo.addColorStop(.18,'rgba(255,226,178,.8)');
-    halo.addColorStop(.45,'rgba(246,192,140,.28)');halo.addColorStop(1,'transparent');
-    ctx.fillStyle=halo;ctx.fillRect(0,0,W,H);
-    ctx.beginPath();ctx.arc(sunx,suny,H*0.052,0,6.283);
-    ctx.fillStyle='rgba(255,249,232,.95)';ctx.fill();
-
-    // ridges
-    const step=Math.max(6,Math.floor(W/180));
-    LAYERS.forEach((L,li)=>{
-      const off=L.seed+t*(0.6+li*0.15)+px*L.par*0.02;
-      const baseY=H*L.y+py*(8+li*4);
-      ctx.beginPath();ctx.moveTo(-20,H+20);
-      for(let x=-20;x<=W+20;x+=step){
-        const nx=(x)*L.rough+off;
-        const h=(fbm(nx)-0.4)*L.amp*H;
-        const y=baseY-h;
-        ctx.lineTo(x,y);
-      }
-      ctx.lineTo(W+20,H+20);ctx.closePath();
-      // gradient fill: layer color at top -> a touch darker toward base
-      const g=ctx.createLinearGradient(0,baseY-L.amp*H,0,H);
-      g.addColorStop(0,L.col);
-      g.addColorStop(1,shade(L.col,-14));
-      ctx.fillStyle=g;ctx.fill();
-      // atmospheric haze along each ridge crest (cream glow), lighter for far layers
-      const hz=ctx.createLinearGradient(0,baseY-L.amp*H*1.3,0,baseY+H*0.05);
-      const ha=0.16*(1-li/LAYERS.length);
-      hz.addColorStop(0,`rgba(247,231,205,${ha})`);hz.addColorStop(1,'transparent');
-      ctx.fillStyle=hz;ctx.fill();
-    });
-
-    // drifting mist
-    ctx.save();
-    for(let m=0;m<4;m++){
-      const my2=H*(0.6+m*0.08);
-      const dx=((t*(14+m*8))%(W+400))-200;
-      const mg=ctx.createLinearGradient(dx-260,0,dx+260,0);
-      mg.addColorStop(0,'transparent');mg.addColorStop(.5,`rgba(250,240,224,${0.10-m*0.015})`);mg.addColorStop(1,'transparent');
-      ctx.fillStyle=mg;ctx.fillRect(dx-260,my2,520,H*0.10);
-    }
-    ctx.restore();
-
-    // fireflies / pollen in the light
-    flies.forEach(f=>{
-      f.y-=f.sp*0.0016; if(f.y<0.42){f.y=0.98;}
-      const fx=(f.x+Math.sin(t*0.7+f.ph)*0.02*f.dr+px*0.02)*W;
-      const fy=f.y*H+py*6;
-      const tw=0.4+0.6*Math.abs(Math.sin(t*2.2+f.ph));
-      const gr=ctx.createRadialGradient(fx,fy,0,fx,fy,f.r*4);
-      gr.addColorStop(0,`rgba(255,224,150,${0.9*tw})`);gr.addColorStop(1,'transparent');
-      ctx.fillStyle=gr;ctx.beginPath();ctx.arc(fx,fy,f.r*4,0,6.283);ctx.fill();
-    });
-
-    raf=requestAnimationFrame(frame);
+  function setScene(p){
+    const first=p<0.5,t=first?p/0.5:(p-0.5)/0.5;
+    const A=first?KEY.m:KEY.s,B=first?KEY.s:KEY.d;
+    for(let i=0;i<4;i++)sky[i].setAttribute('stop-color',mix(A[i],B[i],t));
+    sunDisc.setAttribute('fill',mix(first?sunC.m:sunC.s,first?sunC.s:sunC.d,t));
+    const sy=L(300,706,ease(p)),sx=L(1010,880,p);
+    sun.setAttribute('transform',`translate(${sx.toFixed(1)},${sy.toFixed(1)})`);
+    sunGlow.setAttribute('opacity',(1-0.55*p).toFixed(2));
+    dusk.setAttribute('opacity',(Math.pow(p,1.5)*0.32).toFixed(3));
+    stars.setAttribute('opacity',clamp((p-0.55)/0.4,0,1).toFixed(2));
+    const tx=L(-360,1000,ease(p)),ty=rockTop(tx);
+    const slope=Math.atan2(rockTop(tx+42)-rockTop(tx-42),84)*180/Math.PI;
+    truck.setAttribute('transform',`translate(${tx.toFixed(1)},${ty.toFixed(1)}) rotate(${slope.toFixed(2)}) scale(1.5)`);
+    if(beam)beam.setAttribute('opacity',clamp((p-0.5)/0.5*0.85,0,0.85).toFixed(2));
+    const fade=clamp(1-(p-0.16)/0.42,0,1);
+    if(inner)inner.style.opacity=fade;
+    if(hint)hint.style.opacity=fade;
   }
-  function shade(hex,amt){let c=hex.replace('#','');const r=Math.max(0,Math.min(255,parseInt(c.slice(0,2),16)+amt));const g=Math.max(0,Math.min(255,parseInt(c.slice(2,4),16)+amt));const b=Math.max(0,Math.min(255,parseInt(c.slice(4,6),16)+amt));return`rgb(${r},${g},${b})`;}
 
-  window.addEventListener('resize',()=>{resize();});
-  window.addEventListener('pointermove',e=>{mx=e.clientX/window.innerWidth;my=e.clientY/window.innerHeight;},{passive:true});
-  const hero=document.getElementById('top');
-  new IntersectionObserver(es=>{es.forEach(e=>running=e.isIntersecting)},{threshold:0.02}).observe(hero);
-
-  resize();seedFlies();
-  if(RM){running=true;frame();cancelAnimationFrame(raf);running=false;}
-  else{raf=requestAnimationFrame(frame);}
+  let ticking=false;
+  function tick(){
+    const rect=heroEl.getBoundingClientRect();
+    const total=heroEl.offsetHeight-window.innerHeight;
+    setScene(clamp(-rect.top/(total||1),0,1));
+    ticking=false;
+  }
+  if(RM){heroEl.style.height='100vh';setScene(0.32);}
+  else{
+    window.addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(tick);}},{passive:true});
+    window.addEventListener('resize',tick);
+    tick();
+  }
 })();
 
 /* LOADER */
