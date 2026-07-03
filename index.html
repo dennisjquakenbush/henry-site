@@ -83,11 +83,10 @@ section{position:relative;z-index:3;padding:clamp(70px,10vw,150px) var(--edge)}
 .marker .idx{color:var(--ink-faint);font-family:var(--mono);font-weight:400}
 
 /* HERO */
-.hero{position:relative;height:180vh;z-index:3}
-.hero-pin{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;padding-top:120px}
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:120px;overflow:hidden;z-index:3}
 #scene{position:absolute;inset:0;z-index:1;display:block;width:100%;height:100%}
-.hero-scrim{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(180deg,transparent 0%,transparent 90%,var(--bg) 100%)}
-.hero-scrim.side{background:linear-gradient(100deg,rgba(20,16,30,.34) 0%,rgba(20,16,30,.08) 34%,transparent 58%)}
+.hero-scrim{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(180deg,rgba(244,238,225,.28) 0%,transparent 30%,transparent 70%,rgba(244,238,225,.55) 90%,var(--bg) 100%)}
+.hero-scrim.side{background:linear-gradient(90deg,rgba(244,238,225,.62) 0%,rgba(244,238,225,.16) 40%,transparent 70%)}
 .hero-divider{position:absolute;left:0;right:0;bottom:-1px;z-index:3;width:100%;display:block}
 .hero-inner{position:relative;z-index:5;max-width:var(--maxw);margin:0 auto;width:100%}
 .coords{font-family:var(--mono);font-size:.74rem;letter-spacing:.1em;color:var(--sun);margin-bottom:1.3rem;display:flex;align-items:center;gap:.7rem;flex-wrap:wrap}
@@ -327,9 +326,33 @@ footer .top:hover{color:var(--sun)}
 
 <!-- HERO -->
 <header class="hero" id="top">
- <div class="hero-pin">
-  <canvas id="scene"></canvas>
-
+  <svg id="scene" viewBox="0 0 1440 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="skyG" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#d9e2dc"/>
+        <stop offset="0.42" stop-color="#ecdfc9"/>
+        <stop offset="0.72" stop-color="#f4d9ae"/>
+        <stop offset="1" stop-color="#f6cf9c"/>
+      </linearGradient>
+      <radialGradient id="sunG" cx="50%" cy="50%" r="50%">
+        <stop offset="0" stop-color="#fbeecb"/>
+        <stop offset="0.55" stop-color="#f3d69f" stop-opacity="0.5"/>
+        <stop offset="1" stop-color="#f3d69f" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <rect width="1440" height="800" fill="url(#skyG)"/>
+    <circle cx="1010" cy="300" r="180" fill="url(#sunG)"/>
+    <circle cx="1010" cy="300" r="64" fill="#f7e6bf"/>
+    <!-- layered mountain ridges, back -> front -->
+    <path d="M0,800 L0,470 L250,378 L470,466 L700,352 L960,466 L1200,376 L1440,452 L1440,800 Z" fill="#aebdb2"/>
+    <path d="M0,800 L0,538 L210,424 L440,540 L660,412 L910,540 L1160,438 L1440,528 L1440,800 Z" fill="#8aa290"/>
+    <path d="M0,800 L0,620 L270,494 L520,624 L780,494 L1050,624 L1300,516 L1440,600 L1440,800 Z" fill="#5f7d68"/>
+    <path d="M0,800 L0,712 L320,598 L640,714 L920,606 L1210,712 L1440,650 L1440,800 Z" fill="#3f5e4b"/>
+    <!-- soft snow accents on the far peaks -->
+    <path d="M700,352 L672,392 L730,392 Z M1200,376 L1176,410 L1226,410 Z" fill="#e9ddc7" opacity="0.75"/>
+    <!-- distant birds -->
+    <path d="M300,210 q10,-9 20,0 q10,-9 20,0 M360,240 q8,-7 16,0 q8,-7 16,0" fill="none" stroke="#6b6656" stroke-width="2.4" stroke-linecap="round" opacity="0.5"/>
+  </svg>
   <div class="hero-scrim"></div>
   <div class="hero-scrim side"></div>
   <div class="hero-inner">
@@ -351,8 +374,7 @@ footer .top:hover{color:var(--sun)}
       <a href="mailto:henryjayq@icloud.com" class="btn btn-ghost" data-magnetic>Contact me</a>
     </div>
   </div>
-  <div class="scroll-hint"><span class="ln"></span>Scroll — watch the sun set</div>
- </div>
+  <div class="scroll-hint"><span class="ln"></span>Scroll to explore</div>
 </header>
 
 <!-- ABOUT -->
@@ -637,106 +659,6 @@ const TOUCH=('ontouchstart' in window)||navigator.maxTouchPoints>0;
 if(RM)document.body.classList.add('rm');
 if(TOUCH)document.body.classList.add('touch');
 document.getElementById('yr').textContent=new Date().getFullYear();
-
-/* ============================================================
-   SUNSET OVER THE MOUNTAINS — painterly layered ridges with a
-   scroll-driven sun: golden hour -> fiery sunset -> twilight,
-   with god-rays, drifting mist, rising embers & stars
-   ============================================================ */
-(function(){
-  const cv=document.getElementById('scene');if(!cv)return;
-  const ctx=cv.getContext('2d');
-  const heroEl=document.getElementById('top');
-  const inner=document.querySelector('.hero-inner'),hint=document.querySelector('.scroll-hint');
-  let W=0,H=0,DPR=1,t=0,raf=0,vis=true,mx=0.5,my=0.5,tmx=0.5,tmy=0.5,RMp=null;
-  function resize(){DPR=Math.min(window.devicePixelRatio||1,2);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);}
-
-  const hsh=x=>{const n=Math.sin(x*127.1)*43758.5453;return n-Math.floor(n);};
-  const sm=v=>v*v*(3-2*v);
-  const n1=x=>{const xi=Math.floor(x),xf=x-xi;return hsh(xi)*(1-sm(xf))+hsh(xi+1)*sm(xf);};
-  const fbm=x=>{let a=0,am=.5,f=1;for(let i=0;i<4;i++){a+=n1(x*f)*am;f*=2;am*=.5;}return a;};
-  const cl=(v,a,b)=>Math.max(a,Math.min(b,v));
-  const ease=v=>v<.5?2*v*v:1-Math.pow(-2*v+2,2)/2;
-  const mix=(a,b,t)=>[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];
-  const mul=(a,f)=>[a[0]*f,a[1]*f,a[2]*f];
-  const css=(a,al)=>`rgba(${a[0]|0},${a[1]|0},${a[2]|0},${al==null?1:al})`;
-
-  // colour moods — golden hour / fiery sunset / twilight
-  const DAY={sky:[[92,150,209],[164,199,214],[245,222,168],[250,196,124]],sun:[255,243,205],crest:[248,216,152],base:[58,92,106],mist:[226,238,247],fly:[255,233,164],star:0};
-  const SUN={sky:[[44,60,138],[126,82,170],[231,92,120],[255,140,60]],sun:[255,160,78],crest:[255,178,112],base:[76,46,90],mist:[247,158,184],fly:[255,212,120],star:0.35};
-  const DSK={sky:[[14,16,52],[48,32,90],[122,48,104],[206,74,54]],sun:[231,80,46],crest:[184,98,64],base:[24,20,54],mist:[132,96,158],fly:[255,206,130],star:1};
-  function moodAt(p){
-    let A,B,u;if(p<0.5){A=DAY;B=SUN;u=p/0.5;}else{A=SUN;B=DSK;u=(p-0.5)/0.5;}
-    return {sky:[0,1,2,3].map(i=>mix(A.sky[i],B.sky[i],u)),sun:mix(A.sun,B.sun,u),crest:mix(A.crest,B.crest,u),base:mix(A.base,B.base,u),mist:mix(A.mist,B.mist,u),fly:mix(A.fly,B.fly,u),star:A.star+(B.star-A.star)*u};
-  }
-
-  const RID=[{y:.50,amp:.10,r:.0016,seed:11,par:6},{y:.58,amp:.12,r:.0022,seed:37,par:11},{y:.66,amp:.14,r:.0030,seed:71,par:18},{y:.75,amp:.16,r:.0040,seed:113,par:27},{y:.86,amp:.18,r:.0055,seed:151,par:38}];
-  let flies=[];
-  function seedFlies(){flies=[];const n=TOUCH?26:56;for(let i=0;i<n;i++)flies.push({x:hsh(i*3.1),y:.5+hsh(i*7.7)*.5,r:.6+hsh(i*5.3)*2.1,ph:hsh(i*9.1)*6.28,sp:.02+hsh(i*2.2)*.06,dr:.3+hsh(i*4.4)*.7});}
-
-  function pNow(){if(RMp!=null)return RMp;const r=heroEl.getBoundingClientRect();const total=heroEl.offsetHeight-window.innerHeight;return cl(-r.top/(total||1),0,1);}
-
-  function ridge(li,M){
-    const L=RID[li],baseY=H*L.y+(tmy-.5)*(6+li*5),off=L.seed+(tmx-.5)*L.par*0.02;
-    ctx.beginPath();ctx.moveTo(-20,H+20);
-    const stp=Math.max(5,W/200);
-    for(let x=-20;x<=W+20;x+=stp){const h=(fbm(x*L.r+off)-0.45)*L.amp*H;ctx.lineTo(x,baseY-h);}
-    ctx.lineTo(W+20,H+20);ctx.closePath();
-    const fd=li/(RID.length-1);
-    let top=mix(M.crest,M.base,0.12+0.55*fd);top=mix(top,M.sky[2],(1-fd)*0.30);
-    const g=ctx.createLinearGradient(0,baseY-L.amp*H,0,H);
-    g.addColorStop(0,css(top));g.addColorStop(1,css(mul(M.base,1-0.45*fd)));
-    ctx.fillStyle=g;ctx.fill();
-  }
-
-  function frame(){
-    if(!vis){raf=requestAnimationFrame(frame);return;}
-    t+=0.006;tmx+=(mx-tmx)*0.05;tmy+=(my-tmy)*0.05;
-    const p=pNow(),M=moodAt(p);
-    // sky
-    const sky=ctx.createLinearGradient(0,0,0,H);
-    [0,.34,.66,1].forEach((o,i)=>sky.addColorStop(o,css(M.sky[i])));
-    ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);
-    const sx=W*(0.5+(tmx-.5)*0.05),sy=H*(0.30+ease(p)*0.50);
-    // horizon blaze + god rays (additive)
-    ctx.globalCompositeOperation='lighter';
-    const bz=ctx.createRadialGradient(sx,sy,0,sx,sy,H*0.65);
-    bz.addColorStop(0,css(M.sun,0.55*(1-0.3*p)));bz.addColorStop(0.32,css(M.sun,0.18));bz.addColorStop(1,css(M.sun,0));
-    ctx.fillStyle=bz;ctx.fillRect(0,0,W,H);
-    for(let i=0;i<10;i++){const a=t*0.05+i*0.6283,len=H*0.95;ctx.save();ctx.translate(sx,sy);ctx.rotate(a);const rg=ctx.createLinearGradient(0,0,len,0);rg.addColorStop(0,css(M.sun,0.06));rg.addColorStop(1,css(M.sun,0));ctx.fillStyle=rg;ctx.beginPath();ctx.moveTo(0,-13);ctx.lineTo(len,-48);ctx.lineTo(len,48);ctx.lineTo(0,13);ctx.closePath();ctx.fill();ctx.restore();}
-    // sun glow + disc
-    const gl=ctx.createRadialGradient(sx,sy,0,sx,sy,H*0.17);
-    gl.addColorStop(0,css(M.sun,0.98));gl.addColorStop(0.55,css(M.sun,0.5));gl.addColorStop(1,css(M.sun,0));
-    ctx.fillStyle=gl;ctx.fillRect(sx-H*0.22,sy-H*0.22,H*0.44,H*0.44);
-    ctx.globalCompositeOperation='source-over';
-    ctx.beginPath();ctx.arc(sx,sy,H*0.06,0,6.283);ctx.fillStyle=css(M.sun);ctx.fill();
-    // stars
-    if(M.star>0.01)for(let i=0;i<70;i++){const stx=hsh(i*1.3)*W,sty=hsh(i*2.7)*H*0.55,tw=0.4+0.6*Math.abs(Math.sin(t*2+i));ctx.fillStyle=css([255,247,224],M.star*tw*0.9);const s=hsh(i*3.9)>0.85?2:1.2;ctx.fillRect(stx,sty,s,s);}
-    // back ridges, mist, front ridges
-    ridge(0,M);ridge(1,M);
-    ctx.globalCompositeOperation='lighter';
-    for(let m=0;m<3;m++){const yb=H*(0.60+m*0.07),dx=((t*(20+m*10))%(W+500))-250;const mg=ctx.createLinearGradient(dx-300,0,dx+300,0);mg.addColorStop(0,css(M.mist,0));mg.addColorStop(.5,css(M.mist,0.11-m*0.02));mg.addColorStop(1,css(M.mist,0));ctx.fillStyle=mg;ctx.fillRect(dx-300,yb,600,H*0.12);}
-    ctx.globalCompositeOperation='source-over';
-    ridge(2,M);ridge(3,M);ridge(4,M);
-    // rising embers / fireflies
-    ctx.globalCompositeOperation='lighter';
-    const flyA=0.55+0.45*M.star;
-    flies.forEach(f=>{f.y-=f.sp*0.0016;if(f.y<0.45)f.y=1.0;const fx=(f.x+Math.sin(t*0.7+f.ph)*0.02*f.dr+(tmx-.5)*0.02)*W,fy=f.y*H,tw=0.4+0.6*Math.abs(Math.sin(t*2.2+f.ph));const gr=ctx.createRadialGradient(fx,fy,0,fx,fy,f.r*4);gr.addColorStop(0,css(M.fly,0.9*tw*flyA));gr.addColorStop(1,css(M.fly,0));ctx.fillStyle=gr;ctx.fillRect(fx-f.r*4,fy-f.r*4,f.r*8,f.r*8);});
-    ctx.globalCompositeOperation='source-over';
-    // cinematic vignette
-    const vg=ctx.createRadialGradient(W/2,H*0.5,H*0.32,W/2,H*0.5,H*0.9);vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,`rgba(8,6,18,${0.16+0.24*p})`);ctx.fillStyle=vg;ctx.fillRect(0,0,W,H);
-    // hero text fade
-    const fade=cl(1-(p-0.14)/0.4,0,1);if(inner)inner.style.opacity=fade;if(hint)hint.style.opacity=fade;
-    raf=requestAnimationFrame(frame);
-  }
-
-  resize();seedFlies();
-  window.addEventListener('resize',resize);
-  window.addEventListener('pointermove',e=>{mx=e.clientX/window.innerWidth;my=e.clientY/window.innerHeight;},{passive:true});
-  new IntersectionObserver(es=>es.forEach(e=>vis=e.isIntersecting),{threshold:0.01}).observe(heroEl);
-  if(RM){heroEl.style.height='100vh';RMp=0.44;vis=true;frame();cancelAnimationFrame(raf);}
-  else raf=requestAnimationFrame(frame);
-})();
 
 /* LOADER */
 (function(){const pct=document.getElementById('loadPct');let p=0;
