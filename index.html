@@ -21,8 +21,8 @@
 :root{
   --bg:#f4eee1;--bg-soft:#ece3d2;--panel:#fbf7ee;--panel-2:#f6efe0;
   --line:rgba(46,42,32,.13);--line-strong:rgba(46,42,32,.24);
-  --ink:#2b2820;--ink-dim:#6b6656;--ink-faint:#a49d8a;
-  --sun:#c2663a;--sun-2:#d98a54;--forest:#3f5e4b;--sage:#6f8f6a;--sky:#82a3ab;--sand:#c39a52;
+  --ink:#26231b;--ink-dim:#544f3f;--ink-faint:#867f6c;
+  --sun:#b95c31;--sun-2:#d98a54;--forest:#375743;--sage:#5f7d5e;--sky:#82a3ab;--sand:#b8913f;
   --disp:"Fraunces",Georgia,"Times New Roman",serif;
   --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
@@ -80,6 +80,7 @@ section{position:relative;z-index:3;padding:clamp(70px,10vw,150px) var(--edge)}
 .wrap{max-width:var(--maxw);margin:0 auto;width:100%}
 .marker{font-family:var(--sans);font-size:.74rem;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--sun);display:flex;align-items:center;gap:.7rem;margin-bottom:1.4rem}
 .marker::before{content:"❧";font-size:1rem;color:var(--sun);transform:translateY(-1px)}
+.marker::after{content:"";display:inline-block;width:46px;height:13px;opacity:.6;background:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 14'%3E%3Cpath d='M1 13 L11 4 L17 9 L25 2 L33 9 L41 5 L47 11' fill='none' stroke='%235f7d5e' stroke-width='1.6' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E")}
 .marker .idx{color:var(--ink-faint);font-family:var(--mono);font-weight:400}
 
 /* HERO */
@@ -362,10 +363,16 @@ footer .top:hover{color:var(--sun)}
     <path d="M0,800 L0,548 L230,452 L470,556 L700,438 L940,556 L1180,458 L1440,540 L1440,800 Z" fill="#8aa290"/>
     <path d="M0,800 L0,622 L280,520 L560,628 L820,514 L1080,626 L1320,548 L1440,596 L1440,800 Z" fill="#6f8f74"/>
     <path d="M0,800 L0,708 L260,626 L520,712 L800,632 L1080,712 L1320,648 L1440,690 L1440,800 Z" fill="#3f5e4b"/>
-    <!-- soft snow accents on the tall peaks -->
-    <path d="M540,408 L516,446 L566,446 Z M700,438 L676,472 L726,472 Z" fill="#eaddc6" opacity="0.7"/>
+    <!-- pines on the near ridge -->
+    <g fill="#2d4636">
+      <path transform="translate(232,637) scale(1.1)" d="M-9,0 L-4,-8 L-6,-8 L-3,-15 L-5,-15 L0,-23 L5,-15 L3,-15 L6,-8 L4,-8 L9,0 Z"/>
+      <path transform="translate(258,628) scale(0.85)" d="M-9,0 L-4,-8 L-6,-8 L-3,-15 L-5,-15 L0,-23 L5,-15 L3,-15 L6,-8 L4,-8 L9,0 Z"/>
+      <path transform="translate(285,638)" d="M-9,0 L-4,-8 L-6,-8 L-3,-15 L-5,-15 L0,-23 L5,-15 L3,-15 L6,-8 L4,-8 L9,0 Z"/>
+      <path transform="translate(778,641) scale(0.95)" d="M-9,0 L-4,-8 L-6,-8 L-3,-15 L-5,-15 L0,-23 L5,-15 L3,-15 L6,-8 L4,-8 L9,0 Z"/>
+      <path transform="translate(806,633) scale(1.1)" d="M-9,0 L-4,-8 L-6,-8 L-3,-15 L-5,-15 L0,-23 L5,-15 L3,-15 L6,-8 L4,-8 L9,0 Z"/>
+    </g>
     <!-- distant birds -->
-    <path d="M602,188 q9,-8 18,0 q9,-8 18,0 M666,212 q7,-6 14,0 q7,-6 14,0" fill="none" stroke="#6b6656" stroke-width="2.4" stroke-linecap="round" opacity="0.45"/>
+    <path d="M602,188 q9,-8 18,0 q9,-8 18,0 M666,212 q7,-6 14,0 q7,-6 14,0" fill="none" stroke="#8a8471" stroke-width="2.4" stroke-linecap="round" opacity="0.5"/>
   </svg>
   <div class="hero-scrim"></div>
   <div class="hero-scrim side"></div>
@@ -401,7 +408,6 @@ footer .top:hover{color:var(--sun)}
         <div class="about-body reveal" data-d="1">
           <p>I'm a high-school student in Indianapolis with real operating experience across business operations, digital marketing, AI development, web development, manufacturing, and customer service. I've co-founded a marketing agency, founded multiple businesses of my own, and I currently support operations and logistics at Field Towers.</p>
           <p>My sharpest edge is <b>growth marketing</b> — running Google and Meta ad campaigns, building landing pages, and optimizing funnels until the numbers move. I pair that with real technical range and business ownership, so I can carry an idea all the way from the first ad click to a closed customer.</p>
-          <p>I'm also a <b>NICA mountain-bike athlete</b> for Indiana, and I've earned my way to represent the state at the national championships — the same drive to train, compete, and finish shows up in how I work.</p>
         </div>
       </div>
       <aside class="card reveal" data-d="2">
@@ -560,7 +566,7 @@ footer .top:hover{color:var(--sun)}
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="marker"><span class="idx">05</span> Education &amp; Honors</div>
-      <h2>School, medals, and a <em>starting line</em>.</h2>
+      <h2>School, and a few <em>podiums</em>.</h2>
     </div>
     <div class="edu-grid">
       <div class="edu-card reveal">
@@ -575,14 +581,6 @@ footer .top:hover{color:var(--sun)}
         </div>
       </div>
       <div class="honors">
-        <div class="honor reveal" style="--medal:#6f8f74">
-          <div class="badge"><svg viewBox="0 0 40 40" fill="none" stroke="#fdf8ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="27" r="7"/><circle cx="30" cy="27" r="7"/><path d="M12 27 L19 15 L27 27 M19 15 L24 15 M30 27 L23 16"/></svg></div>
-          <div>
-            <div class="place">NICA · Indiana League</div>
-            <h4>Mountain Bike Racing</h4>
-            <div class="org">Race for Indiana &amp; represented the state at the NICA National Championships</div>
-          </div>
-        </div>
         <div class="honor reveal" data-d="1" style="--medal:#cf9a4e">
           <div class="badge"><span>1st</span></div>
           <div>
@@ -607,7 +605,15 @@ footer .top:hover{color:var(--sun)}
             <div class="org">IACS — Indiana state competition</div>
           </div>
         </div>
-        <div class="edu-card reveal" data-d="4" style="padding:1.5rem 1.6rem">
+        <div class="honor reveal" data-d="4" style="--medal:#5f7d5e">
+          <div class="badge"><svg viewBox="0 0 40 40" fill="none" stroke="#fdf8ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="27" r="7"/><circle cx="30" cy="27" r="7"/><path d="M12 27 L19 15 L27 27 M19 15 L24 15 M30 27 L23 16"/></svg></div>
+          <div>
+            <div class="place">Athletics · NICA Indiana</div>
+            <h4>Mountain Bike Racing</h4>
+            <div class="org">Raced to the NICA National Championships for Indiana</div>
+          </div>
+        </div>
+        <div class="edu-card reveal" data-d="5" style="padding:1.5rem 1.6rem">
           <p style="font-size:.95rem"><b>A steady hand and a good eye.</b> The same discipline behind a state-winning calligraphy piece and an award-winning oil painting shows up in the ad creative, brand identities, and landing pages I design for clients.</p>
         </div>
       </div>
