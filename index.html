@@ -4,10 +4,10 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Henry Quakenbush — Operator · Builder · Marketer</title>
-<meta name="description" content="Henry Quakenbush — entrepreneurial operator building at the intersection of business operations, marketing, and technology. Co-founder of Webleads Genius, founder of Lazer Dot, part of Libera News. Based in Indianapolis; happiest on a trail in Utah or Colorado." />
+<meta name="description" content="Henry Quakenbush — growth marketer and entrepreneurial operator who turns ad spend into pipeline. Co-founder of Webleads Genius, founder of Lazer Dot, part of Libera News. Based in Indianapolis." />
 <meta name="author" content="Henry Quakenbush" />
-<meta property="og:title" content="Henry Quakenbush — Operator · Builder · Marketer" />
-<meta property="og:description" content="Entrepreneurial operator at the intersection of business, marketing, and technology. Field notes from Indianapolis to the Rockies." />
+<meta property="og:title" content="Henry Quakenbush — Growth Marketer · Operator · Builder" />
+<meta property="og:description" content="Growth marketer and entrepreneurial operator at the intersection of marketing, business, and technology." />
 <meta property="og:type" content="website" />
 
 <!-- Favicon: topographic monogram -->
@@ -157,6 +157,31 @@ section{position:relative;z-index:3;padding:clamp(70px,10vw,150px) var(--edge)}
 .stat .num{font-family:var(--disp);font-size:clamp(2.4rem,5vw,3.4rem);font-weight:700;color:var(--sun);line-height:1;letter-spacing:-.03em}
 .stat .lbl{margin-top:.6rem;font-size:.82rem;color:var(--ink-dim)}
 
+/* ============ GROWTH MARKETING ============ */
+.growth-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(2rem,4vw,3.5rem);align-items:center}
+.funnel{display:flex;flex-direction:column;gap:.7rem;align-items:center}
+.funnel .tier{position:relative;width:100%;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:1.15rem 1.4rem;overflow:hidden;transition:border-color .3s,transform .3s}
+.funnel .tier:hover{border-color:var(--sun);transform:translateY(-2px)}
+.funnel .tier:nth-child(2){width:88%}
+.funnel .tier:nth-child(3){width:74%}
+.funnel .tier:nth-child(4){width:60%}
+.tier .bar{position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(90deg,rgba(232,126,70,.18),transparent);transition:width 1.2s cubic-bezier(.16,1,.3,1)}
+.funnel.in .tier .bar{width:100%}
+.funnel.in .tier:nth-child(2) .bar{transition-delay:.12s}
+.funnel.in .tier:nth-child(3) .bar{transition-delay:.24s}
+.funnel.in .tier:nth-child(4) .bar{transition-delay:.36s}
+.tier .tstage{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--sun);position:relative;z-index:2}
+.tier .tname{font-family:var(--disp);font-weight:700;font-size:1.02rem;position:relative;z-index:2;margin-top:.25rem;letter-spacing:-.01em}
+.tier .twork{font-size:.8rem;color:var(--ink-dim);position:relative;z-index:2;margin-top:.25rem;font-weight:300}
+.metric-card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:1.9rem;margin-bottom:1.6rem;position:relative;overflow:hidden}
+.metric-card::before{content:"";position:absolute;top:-30%;right:-15%;width:55%;height:160%;background:radial-gradient(circle,rgba(232,126,70,.14),transparent 65%)}
+.metric-card .mnum{font-family:var(--disp);font-weight:800;font-size:clamp(3rem,7vw,4.6rem);color:var(--sun);line-height:1;letter-spacing:-.03em;position:relative;z-index:2}
+.metric-card p{margin-top:.7rem;color:var(--ink-dim);font-size:.95rem;font-weight:300;position:relative;z-index:2}
+.stack-label{font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:.9rem}
+.stack-chips{display:flex;flex-wrap:wrap;gap:.55rem}
+.stack-chips span{font-size:.84rem;color:var(--ink);padding:.5rem .85rem;background:var(--bg-soft);border:1px solid var(--line);border-radius:8px;transition:.3s}
+.stack-chips span:hover{border-color:var(--sun);color:var(--sun);transform:translateY(-2px)}
+
 /* ============ VENTURES ============ */
 .ventures{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem}
 .venture{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:2.2rem;overflow:hidden;transition:transform .4s cubic-bezier(.16,1,.3,1),border-color .4s}
@@ -285,11 +310,12 @@ footer .top:hover{color:var(--sun)}
   .about-grid{grid-template-columns:1fr}.card{position:static}
   .ventures{grid-template-columns:1fr}.libera-grid{grid-template-columns:1fr}
   .edu-grid{grid-template-columns:1fr}
+  .growth-grid{grid-template-columns:1fr}
+  .funnel .tier{width:100%!important}
   .stats{grid-template-columns:repeat(2,1fr)}
-  .camp-grid{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:520px){
-  .stats,.camp-grid{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr}
   .hero-actions{flex-direction:column;align-items:stretch}.btn{justify-content:center}
 }
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.1ms!important}.reveal{opacity:1;transform:none}}
@@ -314,11 +340,11 @@ footer .top:hover{color:var(--sun)}
   <a href="#top" class="brand"><svg viewBox="0 0 40 30"><path d="M4 28 L15 8 L21 18 L27 6 L36 28 Z"/></svg>Henry&nbsp;Quakenbush</a>
   <div class="nav-links" id="navlinks">
     <a href="#about">Trailhead</a>
+    <a href="#growth">Growth</a>
     <a href="#ventures">Ventures</a>
     <a href="#experience">Experience</a>
     <a href="#education">Honors</a>
     <a href="#libera">Libera News</a>
-    <a href="#basecamp">Basecamp</a>
     <a href="#contact" class="nav-cta">Get in touch</a>
   </div>
   <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -334,18 +360,18 @@ footer .top:hover{color:var(--sun)}
   <div class="ridge" data-depth="0.32"><svg viewBox="0 0 1440 320" preserveAspectRatio="none"><path d="M0,320 L0,270 L120,200 L240,260 L380,175 L520,255 L640,160 L780,250 L940,185 L1120,255 L1300,200 L1440,250 L1440,320 Z" fill="#0d120f"/></svg></div>
 
   <div class="hero-inner">
-    <div class="coords"><span class="pin">⌖</span> 39.77° N, 86.16° W · Indianapolis, IN <span style="color:var(--ink-faint)">→</span> happiest at ~8,000 ft</div>
-    <div class="hero-tag">Business Operations · Marketing · Technology</div>
+    <div class="coords"><span class="pin">⌖</span> 39.77° N, 86.16° W · Indianapolis, IN <span style="color:var(--ink-faint)">→</span> turning spend into pipeline</div>
+    <div class="hero-tag">Growth Marketing · Business Operations · Technology</div>
     <h1>
       <span class="line"><span>Henry</span></span>
       <span class="line"><span>Quakenbush</span></span>
     </h1>
-    <p class="hero-sub">An <b>entrepreneurial operator</b> and high-school builder who has co-founded a marketing agency, launched three businesses, and shipped real products across <b>AI, web, and manufacturing</b> — then trades the laptop for a mountain bike, a tent, and the backroads of Utah and Colorado.</p>
+    <p class="hero-sub">A <b>growth marketer</b> and entrepreneurial operator who turns ad spend into pipeline — co-founded a marketing agency, founded three businesses, and builds the <b>AI, web, and systems</b> behind the campaigns.</p>
     <div class="hero-roles">
-      <span class="chip">Founder ×3</span>
-      <span class="chip">Agency Co-Founder</span>
-      <span class="chip">AI &amp; Web Developer</span>
       <span class="chip">Growth Marketer</span>
+      <span class="chip">Agency Co-Founder</span>
+      <span class="chip">Founder ×3</span>
+      <span class="chip">AI &amp; Web Developer</span>
     </div>
     <div class="hero-actions">
       <a href="#ventures" class="btn btn-primary">Explore my work <span class="arw">→</span></a>
@@ -364,7 +390,7 @@ footer .top:hover{color:var(--sun)}
         <p class="about-lead reveal">Motivated, entrepreneurial, and relentlessly <em>hands-on</em> — I build businesses, campaigns, and software that deliver real outcomes.</p>
         <div class="about-body reveal" data-d="1">
           <p>I'm a high-school student in Indianapolis with real operating experience across business operations, digital marketing, AI development, web development, manufacturing, and customer service. I've co-founded a marketing agency, founded multiple businesses of my own, and I currently support operations and logistics at Field Towers.</p>
-          <p>I'm known for managing client relationships, running digital advertising campaigns, handling business finances, and delivering technical projects end-to-end. I learn new technologies quickly, solve hard problems, and I'm happiest when the work translates into measurable results — and when the weekend means singletrack, a campfire, and a truck pointed at the mountains.</p>
+          <p>My sharpest edge is <b>growth marketing</b> — running Google and Meta ad campaigns, building landing pages, and optimizing funnels until the numbers move. I pair that with real technical range and business ownership, so I can carry an idea all the way from the first ad click to a closed customer.</p>
         </div>
       </div>
       <aside class="card reveal" data-d="2">
@@ -375,7 +401,7 @@ footer .top:hover{color:var(--sun)}
         <div class="fact"><span>School</span><span>Colonial Christian</span></div>
         <div class="fact"><span>Graduating</span><span>Class of 2027</span></div>
         <div class="fact"><span>Clients served</span><span>75+</span></div>
-        <div class="fact"><span>Off the clock</span><span>MTB · Overlanding</span></div>
+        <div class="fact"><span>Superpower</span><span>Growth Marketing</span></div>
       </aside>
     </div>
   </div>
@@ -388,7 +414,36 @@ footer .top:hover{color:var(--sun)}
       <div class="stat"><div class="cap">Reach</div><div class="num" data-count="75" data-suffix="+">0</div><div class="lbl">Clients served</div></div>
       <div class="stat"><div class="cap">Built</div><div class="num" data-count="4">0</div><div class="lbl">Businesses founded / co-founded</div></div>
       <div class="stat"><div class="cap">Impact</div><div class="num" data-count="50" data-suffix="%">0</div><div class="lbl">Of a client's web leads driven</div></div>
-      <div class="stat"><div class="cap">Podiums</div><div class="num" data-count="2">0</div><div class="lbl">National / state fine-arts awards</div></div>
+      <div class="stat"><div class="cap">Podiums</div><div class="num" data-count="3">0</div><div class="lbl">State &amp; national fine-arts awards</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- GROWTH MARKETING -->
+<section id="growth">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="marker"><span class="idx">02</span> · Growth Marketing</div>
+      <h2>Turning spend into <em>pipeline</em>.</h2>
+      <p>This is my home turf. I run the whole funnel — from the first ad impression to a closed customer — and optimize every stage until the numbers actually move.</p>
+    </div>
+    <div class="growth-grid">
+      <div class="funnel reveal">
+        <div class="tier"><div class="bar"></div><div class="tstage">01 · Reach</div><div class="tname">Get in front of the right people</div><div class="twork">Google Ads · Meta Ads · SEO · Keyword research</div></div>
+        <div class="tier"><div class="bar"></div><div class="tstage">02 · Click</div><div class="tname">Earn the click</div><div class="twork">Ad creative · Landing pages · Messaging</div></div>
+        <div class="tier"><div class="bar"></div><div class="tstage">03 · Convert</div><div class="tname">Turn visits into leads</div><div class="twork">CRO · Lead capture · Analytics</div></div>
+        <div class="tier"><div class="bar"></div><div class="tstage">04 · Close</div><div class="tname">Turn leads into customers</div><div class="twork">CRM · Proposals · Sales follow-up</div></div>
+      </div>
+      <div class="growth-side reveal" data-d="1">
+        <div class="metric-card">
+          <div class="mnum" data-count="50" data-suffix="%+">0</div>
+          <p>of one client's total web leads came from advertising campaigns I built and managed.</p>
+        </div>
+        <div class="stack-label">The stack I run</div>
+        <div class="stack-chips">
+          <span>Google Ads</span><span>Meta Ads</span><span>SEO</span><span>Google Analytics</span><span>CRO</span><span>Landing Pages</span><span>Email Marketing</span><span>Keyword Research</span><span>GoHighLevel</span><span>CRM</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -397,7 +452,7 @@ footer .top:hover{color:var(--sun)}
 <section id="ventures">
   <div class="wrap">
     <div class="sec-head reveal">
-      <div class="marker"><span class="idx">02</span> · Ventures</div>
+      <div class="marker"><span class="idx">03</span> · Ventures</div>
       <h2>Businesses I've <em>built</em> and run.</h2>
       <p>Four ventures, three of them founded from scratch — each one a full loop of building, marketing, selling, and serving customers.</p>
     </div>
@@ -442,7 +497,7 @@ footer .top:hover{color:var(--sun)}
 <section id="experience">
   <div class="wrap">
     <div class="sec-head reveal">
-      <div class="marker"><span class="idx">03</span> · Experience</div>
+      <div class="marker"><span class="idx">04</span> · Experience</div>
       <h2>The route so <em>far</em>.</h2>
     </div>
     <div class="elev-wrap reveal">
@@ -492,7 +547,7 @@ footer .top:hover{color:var(--sun)}
 <section id="education">
   <div class="wrap">
     <div class="sec-head reveal">
-      <div class="marker"><span class="idx">04</span> · Education &amp; Honors</div>
+      <div class="marker"><span class="idx">05</span> · Education &amp; Honors</div>
       <h2>School, and a couple of <em>podiums</em>.</h2>
     </div>
     <div class="edu-grid">
@@ -500,32 +555,40 @@ footer .top:hover{color:var(--sun)}
         <div class="flag">Education</div>
         <h3>Colonial Christian School</h3>
         <div class="loc">⌖ Indianapolis, Indiana</div>
-        <p>A respected college-preparatory Christian school on the northeast side of Indianapolis, known for a tight-knit community and a strong academics and fine-arts program. Students compete at the state and national level through the American Association of Christian Schools (AACS) and the Indiana Association of Christian Schools (IACS) — where I've had the chance to represent the school and place.</p>
+        <p>A well-respected, college-preparatory Christian school in Indianapolis with a strong reputation for <b>academics</b> and a competitive fine-arts program. Students consistently compete — and place — at the state and national level through the American Association of Christian Schools (AACS) and the Indiana Association of Christian Schools (IACS), where I've represented the school and taken home medals.</p>
         <div class="meta">
           <div><div class="k">Track</div><div class="v">College Prep</div></div>
           <div><div class="k">Graduating</div><div class="v">Class of 2027</div></div>
-          <div><div class="k">Competes in</div><div class="v">AACS · IACS</div></div>
+          <div><div class="k">Known for</div><div class="v">Academics &amp; Arts</div></div>
         </div>
       </div>
       <div class="honors">
-        <div class="honor reveal" data-d="1" style="--medal:#d9b27e">
+        <div class="honor reveal" data-d="1" style="--medal:#e0bd7f">
           <div class="badge"><span>1st</span></div>
           <div>
-            <div class="place">First Place · Gold</div>
-            <h4>Photography</h4>
-            <div class="org">IACS — Indiana Association of Christian Schools</div>
+            <div class="place">First Place · State</div>
+            <h4>Calligraphy</h4>
+            <div class="org">IACS — Indiana state competition</div>
           </div>
         </div>
-        <div class="honor reveal" data-d="2" style="--medal:#c0c4cc">
-          <div class="badge"><span>2nd</span></div>
+        <div class="honor reveal" data-d="2" style="--medal:#c78a5a">
+          <div class="badge"><span>3rd</span></div>
           <div>
-            <div class="place">Second Place · National</div>
+            <div class="place">Third Place · Nationals</div>
             <h4>Calligraphy</h4>
             <div class="org">AACS Nationals — American Association of Christian Schools</div>
           </div>
         </div>
-        <div class="edu-card reveal" data-d="3" style="padding:1.5rem 1.6rem">
-          <p style="font-size:.92rem"><b style="color:var(--ink)">A steady hand and a good eye.</b> The same care that wins a calligraphy medal and frames a photograph shows up in the brand identities, landing pages, and products I design for clients.</p>
+        <div class="honor reveal" data-d="3" style="--medal:#c3c7cf">
+          <div class="badge"><span>2nd</span></div>
+          <div>
+            <div class="place">Second Place · State</div>
+            <h4>Oil Painting</h4>
+            <div class="org">IACS — Indiana state competition</div>
+          </div>
+        </div>
+        <div class="edu-card reveal" data-d="4" style="padding:1.5rem 1.6rem">
+          <p style="font-size:.92rem"><b style="color:var(--ink)">A steady hand and a good eye.</b> The same discipline behind a state-winning calligraphy piece and an award-winning oil painting shows up in the ad creative, brand identities, and landing pages I design for clients.</p>
         </div>
       </div>
     </div>
@@ -558,7 +621,7 @@ footer .top:hover{color:var(--sun)}
 <section id="skills">
   <div class="wrap">
     <div class="sec-head reveal">
-      <div class="marker"><span class="idx">05</span> · Capabilities</div>
+      <div class="marker"><span class="idx">06</span> · Capabilities</div>
       <h2>A wide, working <em>toolkit</em>.</h2>
       <p>Filter by discipline — from code and AI to marketing, operations, design, and hands-on manufacturing.</p>
     </div>
@@ -572,44 +635,6 @@ footer .top:hover{color:var(--sun)}
       <button class="skill-tab" data-cat="mech">Mechanical</button>
     </div>
     <div class="skill-grid reveal" data-d="1" id="skillGrid"></div>
-  </div>
-</section>
-
-<!-- BASECAMP / OUTDOORS -->
-<section id="basecamp" class="basecamp">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="marker"><span class="idx">06</span> · Basecamp</div>
-      <h2>Off the clock, <em>outside</em>.</h2>
-      <p>When the work is shipped, you'll find me chasing trails, backroads, and quiet campsites across the Mountain West.</p>
-    </div>
-    <div class="camp-grid">
-      <div class="camp reveal">
-        <div class="ic"><svg viewBox="0 0 40 40"><path d="M4 32 L14 12 L20 22 L26 8 L36 32 Z"/><circle cx="29" cy="13" r="3"/></svg></div>
-        <h4>Mountain Biking</h4>
-        <p>Slickrock and singletrack — earning the alpine descents one climb at a time.</p>
-      </div>
-      <div class="camp reveal" data-d="1">
-        <div class="ic"><svg viewBox="0 0 40 40"><path d="M6 30 L14 12 L18 20 M14 12 L26 30"/><path d="M4 30 L36 30 M20 30 L24 18 L30 30"/></svg></div>
-        <h4>Camping</h4>
-        <p>Nights in the woods, a fire, and a sky with actual stars in it.</p>
-      </div>
-      <div class="camp reveal" data-d="2">
-        <div class="ic"><svg viewBox="0 0 40 40"><path d="M3 26 L3 18 L22 18 L28 12 L34 12 L37 18 L37 26 Z"/><circle cx="11" cy="26" r="3.5"/><circle cx="29" cy="26" r="3.5"/></svg></div>
-        <h4>Overlanding</h4>
-        <p>Self-reliant travel down remote routes — the drive is half the trip.</p>
-      </div>
-      <div class="camp reveal" data-d="3">
-        <div class="ic"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="15"/><path d="M20 8 L24 20 L20 32 L16 20 Z"/><path d="M20 5 L20 8 M20 32 L20 35 M5 20 L8 20 M32 20 L35 20"/></svg></div>
-        <h4>Exploring</h4>
-        <p>Maps, compass, and a full tank — always plotting the next route.</p>
-      </div>
-    </div>
-    <div class="camp-regions reveal" data-d="2">
-      <span class="region">Moab &amp; the Utah red rock</span>
-      <span class="region">Colorado Rockies</span>
-      <span class="region">Backcountry &amp; national forests</span>
-    </div>
   </div>
 </section>
 
@@ -704,7 +729,7 @@ const SKILLS=[
   ["Hugging Face","ai"],["AI Fine-Tuning","ai"],["AI Agents","ai"],["Conversational AI","ai"],["Chatbot Development","ai"],["Prompt Engineering","ai"],["API Integration","ai"],["AI Workflow Automation","ai"],
   ["Google Ads","marketing"],["Facebook Ads","marketing"],["SEO","marketing"],["Google Analytics","marketing"],["Landing Page Optimization","marketing"],["CRO","marketing"],["Email Marketing","marketing"],["Keyword Research","marketing"],
   ["Business Operations","ops"],["Project Management","ops"],["Financial Management","ops"],["Client Acquisition","ops"],["CRM","ops"],["Proposal Writing","ops"],["Sales","ops"],["Logistics & Delivery","ops"],["Customer Service","ops"],["Zoho","ops"],["GoHighLevel","ops"],["QuickBooks","ops"],["Microsoft Office","ops"],["Excel","ops"],
-  ["Adobe Creative Cloud","design"],["Photoshop","design"],["Lightroom","design"],["Photography","design"],["Video Editing","design"],["UI/UX Design","design"],["Logo Design","design"],["Brand Identity","design"],["Product Design","design"],["Canva","design"],["CAD","design"],["Calligraphy","design"],
+  ["Adobe Creative Cloud","design"],["Photoshop","design"],["Lightroom","design"],["Photography","design"],["Video Editing","design"],["UI/UX Design","design"],["Logo Design","design"],["Brand Identity","design"],["Product Design","design"],["Canva","design"],["CAD","design"],["Calligraphy","design"],["Oil Painting","design"],
   ["Automotive Maintenance","mech"],["Mechanical Troubleshooting","mech"],["Oil Changes","mech"],["Spark Plugs","mech"],["Battery Replacement","mech"],["Suspension Work","mech"],["Engine Diagnostics","mech"],["Automotive Electrical","mech"],["Accessory Installation","mech"],["Manufacturing","mech"],["Laser Engraving","mech"],["Product Fabrication","mech"],
 ];
 const grid=document.getElementById('skillGrid');
