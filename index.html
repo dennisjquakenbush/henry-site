@@ -61,8 +61,10 @@ body.touch .cur,body.rm .cur{display:none}
 .progress{position:fixed;top:0;left:0;height:2px;width:0;background:linear-gradient(90deg,var(--sun),var(--sand),var(--sage));z-index:200}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:120;display:flex;align-items:center;justify-content:space-between;padding:1.05rem var(--edge);transition:background .4s,backdrop-filter .4s,border-color .4s;border-bottom:1px solid transparent}
-nav.scrolled{background:rgba(244,238,225,.78);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+nav{position:fixed;top:0;left:0;right:0;z-index:120;display:flex;align-items:center;justify-content:space-between;padding:1.05rem var(--edge);transition:border-color .4s;border-bottom:1px solid transparent}
+nav::before{content:"";position:absolute;inset:0;z-index:-1;background:rgba(244,238,225,0);backdrop-filter:blur(0px);-webkit-backdrop-filter:blur(0px);transition:background .4s ease,backdrop-filter .4s ease,-webkit-backdrop-filter .4s ease;pointer-events:none}
+nav.scrolled{border-bottom:1px solid var(--line)}
+nav.scrolled::before{background:rgba(244,238,225,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
 .brand{display:flex;align-items:center;gap:.6rem;font-family:var(--disp);font-weight:600;font-size:1.08rem;letter-spacing:-.01em}
 .brand svg{width:22px;height:18px}
 .brand svg path{fill:none;stroke:var(--sun);stroke-width:6;stroke-linejoin:round}
