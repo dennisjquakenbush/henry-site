@@ -213,7 +213,8 @@ section{position:relative;z-index:3;padding:clamp(70px,10vw,150px) var(--edge)}
 .tl-item li{font-size:.95rem;color:var(--ink-dim);font-weight:400;padding-left:1.2rem;position:relative;margin-bottom:.45rem}
 .tl-item li::before{content:"—";position:absolute;left:0;color:var(--ink-faint)}
 
-.edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;align-items:stretch}
+.edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;align-items:start}
+.edu-col{display:flex;flex-direction:column;gap:1.4rem}
 .edu-card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:2.2rem;position:relative;overflow:hidden;box-shadow:var(--shadow)}
 .edu-card .flag{font-family:var(--sans);font-weight:600;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--sage);margin-bottom:1.2rem}
 .edu-card h3{font-family:var(--disp);font-size:1.6rem;font-weight:500;letter-spacing:-.01em}
@@ -581,15 +582,28 @@ footer .top:hover{color:var(--sun)}
       <h2>School, and a few <em>podiums</em>.</h2>
     </div>
     <div class="edu-grid">
-      <div class="edu-card reveal">
-        <div class="flag">Education</div>
-        <h3>Colonial Christian School</h3>
-        <div class="loc">⌖ Indianapolis, Indiana</div>
-        <p>A well-respected, college-preparatory Christian school in Indianapolis with a strong reputation for <b>academics</b> and a competitive fine-arts program. Students consistently compete — and place — at the state and national level through the American Association of Christian Schools (AACS) and the Indiana Association of Christian Schools (IACS), where I've represented the school and taken home medals.</p>
-        <div class="meta">
-          <div><div class="k">Track</div><div class="v">College Prep</div></div>
-          <div><div class="k">Graduating</div><div class="v">Class of 2027</div></div>
-          <div><div class="k">Known for</div><div class="v">Academics &amp; Arts</div></div>
+      <div class="edu-col">
+        <div class="edu-card reveal">
+          <div class="flag">Education</div>
+          <h3>Colonial Christian School</h3>
+          <div class="loc">⌖ Indianapolis, Indiana</div>
+          <p>A well-respected, college-preparatory Christian school in Indianapolis with a strong reputation for <b>academics</b> and a competitive fine-arts program. Students consistently compete — and place — at the state and national level through the American Association of Christian Schools (AACS) and the Indiana Association of Christian Schools (IACS), where I've represented the school and taken home medals.</p>
+          <div class="meta">
+            <div><div class="k">Track</div><div class="v">College Prep</div></div>
+            <div><div class="k">Graduating</div><div class="v">Class of 2027</div></div>
+            <div><div class="k">Known for</div><div class="v">Academics &amp; Arts</div></div>
+          </div>
+        </div>
+        <div class="edu-card reveal" data-d="1">
+          <div class="flag">Trade Training · Planned</div>
+          <h3>ABC — Associated Builders &amp; Contractors</h3>
+          <div class="loc">⌖ Indiana</div>
+          <p>Planning to continue my training through ABC's general trade program — building hands-on construction and skilled-trade experience alongside my background in operations, manufacturing, and business.</p>
+          <div class="meta">
+            <div><div class="k">Program</div><div class="v">General Trades</div></div>
+            <div><div class="k">Planned</div><div class="v">2026 – 2027</div></div>
+            <div><div class="k">Status</div><div class="v">Upcoming</div></div>
+          </div>
         </div>
       </div>
       <div class="honors">
