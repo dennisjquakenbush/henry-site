@@ -41,6 +41,7 @@ img{max-width:100%;display:block}
 .cur-ring{width:30px;height:30px;border:1.5px solid rgba(63,94,75,.5);transition:width .25s,height .25s,background .25s,border-color .25s}
 .cur-ring.hover{width:56px;height:56px;background:rgba(194,102,58,.12);border-color:var(--sun)}
 body.touch .cur,body.rm .cur{display:none}
+@media(pointer:coarse){.cur{display:none}}
 
 /* PAPER TEXTURES */
 #topo{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.55}
@@ -86,6 +87,10 @@ section{position:relative;z-index:3;padding:clamp(70px,10vw,150px) var(--edge)}
 /* HERO */
 .hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:120px;overflow:hidden;z-index:3}
 #scene{position:absolute;inset:0;z-index:1;display:block;width:100%;height:100%}
+#sunGlow{animation:sunBreathe 8s ease-in-out infinite}
+#birds{animation:birdDrift 24s ease-in-out infinite}
+@keyframes sunBreathe{0%,100%{opacity:.85}50%{opacity:1}}
+@keyframes birdDrift{0%{transform:translate(0,0)}50%{transform:translate(34px,-14px)}100%{transform:translate(0,0)}}
 .hero-scrim{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(180deg,rgba(244,238,225,.28) 0%,transparent 30%,transparent 70%,rgba(244,238,225,.55) 90%,var(--bg) 100%)}
 .hero-scrim.side{background:linear-gradient(90deg,rgba(244,238,225,.62) 0%,rgba(244,238,225,.16) 40%,transparent 70%)}
 .hero-divider{position:absolute;left:0;right:0;bottom:-1px;z-index:3;width:100%;display:block}
@@ -344,35 +349,42 @@ footer .top:hover{color:var(--sun)}
   <svg id="scene" viewBox="0 0 1440 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
     <defs>
       <linearGradient id="skyG" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#d9e2dc"/>
-        <stop offset="0.42" stop-color="#ecdfc9"/>
-        <stop offset="0.72" stop-color="#f4d9ae"/>
-        <stop offset="1" stop-color="#f6cf9c"/>
+        <stop offset="0" stop-color="#bcd0cf"/>
+        <stop offset="0.38" stop-color="#dfd6c1"/>
+        <stop offset="0.66" stop-color="#f2d6a6"/>
+        <stop offset="0.85" stop-color="#f4c88a"/>
+        <stop offset="1" stop-color="#eeb877"/>
       </linearGradient>
       <radialGradient id="sunG" cx="50%" cy="50%" r="50%">
-        <stop offset="0" stop-color="#fbeecb"/>
-        <stop offset="0.55" stop-color="#f3d69f" stop-opacity="0.5"/>
-        <stop offset="1" stop-color="#f3d69f" stop-opacity="0"/>
+        <stop offset="0" stop-color="#fef3d6"/>
+        <stop offset="0.45" stop-color="#f7d89e" stop-opacity="0.6"/>
+        <stop offset="1" stop-color="#f7d89e" stop-opacity="0"/>
       </radialGradient>
     </defs>
     <rect width="1440" height="800" fill="url(#skyG)"/>
-    <circle cx="820" cy="244" r="190" fill="url(#sunG)"/>
-    <circle cx="820" cy="244" r="62" fill="#f7e6bf"/>
-    <!-- layered mountain ridges, back -> front -->
-    <path d="M0,800 L0,486 L180,432 L360,486 L540,408 L760,486 L980,424 L1200,486 L1440,444 L1440,800 Z" fill="#aebdb2"/>
-    <path d="M0,800 L0,548 L230,452 L470,556 L700,438 L940,556 L1180,458 L1440,540 L1440,800 Z" fill="#8aa290"/>
-    <path d="M0,800 L0,622 L280,520 L560,628 L820,514 L1080,626 L1320,548 L1440,596 L1440,800 Z" fill="#6f8f74"/>
-    <path d="M0,800 L0,708 L260,626 L520,712 L800,632 L1080,712 L1320,648 L1440,690 L1440,800 Z" fill="#3f5e4b"/>
+    <g id="sunGrp">
+      <circle id="sunGlow" cx="820" cy="240" r="210" fill="url(#sunG)"/>
+      <circle cx="820" cy="240" r="60" fill="#f9e7ba"/>
+    </g>
+    <!-- birds drifting high in the sky -->
+    <g id="birds" fill="none" stroke="#7c7561" stroke-width="2.2" stroke-linecap="round" opacity="0.38">
+      <path d="M636,104 q9,-8 18,0 q9,-8 18,0"/>
+      <path d="M700,126 q7,-6 14,0 q7,-6 14,0"/>
+      <path d="M582,132 q6,-5 12,0 q6,-5 12,0"/>
+    </g>
+    <!-- layered ridges (atmospheric perspective), back -> front -->
+    <path id="mFar" d="M-30,800 L-30,486 L180,432 L360,486 L540,408 L760,486 L980,424 L1200,486 L1470,444 L1470,800 Z" fill="#b4c4c3"/>
+    <path id="mMid" d="M-30,800 L-30,548 L230,452 L470,556 L700,438 L940,556 L1180,458 L1470,540 L1470,800 Z" fill="#8daa95"/>
+    <path id="mMid2" d="M-30,800 L-30,622 L280,520 L560,628 L820,514 L1080,626 L1320,548 L1470,596 L1470,800 Z" fill="#66895f"/>
+    <path id="mNear" d="M-30,800 L-30,708 L260,626 L520,712 L800,632 L1080,712 L1320,648 L1470,690 L1470,800 Z" fill="#3a5941"/>
     <!-- pines on the near ridge -->
-    <g fill="#2d4636">
+    <g id="pines" fill="#284031">
       <path transform="translate(232,637) scale(1.1)" d="M-9,0 L-4,-8 L-6,-8 L-3,-15 L-5,-15 L0,-23 L5,-15 L3,-15 L6,-8 L4,-8 L9,0 Z"/>
       <path transform="translate(258,628) scale(0.85)" d="M-9,0 L-4,-8 L-6,-8 L-3,-15 L-5,-15 L0,-23 L5,-15 L3,-15 L6,-8 L4,-8 L9,0 Z"/>
       <path transform="translate(285,638)" d="M-9,0 L-4,-8 L-6,-8 L-3,-15 L-5,-15 L0,-23 L5,-15 L3,-15 L6,-8 L4,-8 L9,0 Z"/>
       <path transform="translate(778,641) scale(0.95)" d="M-9,0 L-4,-8 L-6,-8 L-3,-15 L-5,-15 L0,-23 L5,-15 L3,-15 L6,-8 L4,-8 L9,0 Z"/>
       <path transform="translate(806,633) scale(1.1)" d="M-9,0 L-4,-8 L-6,-8 L-3,-15 L-5,-15 L0,-23 L5,-15 L3,-15 L6,-8 L4,-8 L9,0 Z"/>
     </g>
-    <!-- distant birds -->
-    <path d="M602,188 q9,-8 18,0 q9,-8 18,0 M666,212 q7,-6 14,0 q7,-6 14,0" fill="none" stroke="#8a8471" stroke-width="2.4" stroke-linecap="round" opacity="0.5"/>
   </svg>
   <div class="hero-scrim"></div>
   <div class="hero-scrim side"></div>
@@ -700,10 +712,15 @@ document.getElementById('yr').textContent=new Date().getFullYear();
   [[360,300,9],[1080,600,8],[900,180,6],[300,760,6]].forEach(([cx,cy,n])=>{for(let i=1;i<=n;i++){const e=document.createElementNS(ns,'ellipse');
     e.setAttribute('cx',cx);e.setAttribute('cy',cy);e.setAttribute('rx',i*26+8);e.setAttribute('ry',i*20+6);e.setAttribute('transform',`rotate(${(cx%40)-20} ${cx} ${cy})`);svg.appendChild(e);}});})();
 
-/* CURSOR */
-if(!TOUCH&&!RM){const dot=document.getElementById('curDot'),ring=document.getElementById('curRing');let rx=0,ry=0,dx=0,dy=0;
-  window.addEventListener('pointermove',e=>{dx=e.clientX;dy=e.clientY;dot.style.transform=`translate(${dx}px,${dy}px) translate(-50%,-50%)`;},{passive:true});
-  (function loop(){rx+=(dx-rx)*0.18;ry+=(dy-ry)*0.18;ring.style.transform=`translate(${rx}px,${ry}px) translate(-50%,-50%)`;requestAnimationFrame(loop);})();
+/* CURSOR + HERO PARALLAX (shared rAF loop) */
+if(!TOUCH&&!RM){const dot=document.getElementById('curDot'),ring=document.getElementById('curRing');let rx=0,ry=0,dx=0,dy=0,mnx=0,mny=0,lx=0,ly=0,tt=0;
+  const PAR=[['mFar',3],['mMid',6],['mMid2',10],['mNear',15],['pines',15],['sunGrp',-7]].map(([id,d])=>[document.getElementById(id),d]).filter(x=>x[0]);
+  window.addEventListener('pointermove',e=>{dx=e.clientX;dy=e.clientY;mnx=e.clientX/window.innerWidth-0.5;mny=e.clientY/window.innerHeight-0.5;dot.style.transform=`translate(${dx}px,${dy}px) translate(-50%,-50%)`;},{passive:true});
+  (function loop(){tt+=0.006;rx+=(dx-rx)*0.18;ry+=(dy-ry)*0.18;ring.style.transform=`translate(${rx}px,${ry}px) translate(-50%,-50%)`;
+    const ix=Math.sin(tt)*0.10,iy=Math.cos(tt*0.8)*0.05; // gentle idle "breeze"
+    lx+=((mnx+ix)-lx)*0.05;ly+=((mny+iy)-ly)*0.05;
+    for(const [el,d] of PAR)el.setAttribute('transform',`translate(${(lx*d).toFixed(2)},${(ly*d*0.5).toFixed(2)})`);
+    requestAnimationFrame(loop);})();
   document.querySelectorAll('a,button,.tilt,.skill,.chip').forEach(el=>{el.addEventListener('pointerenter',()=>ring.classList.add('hover'));el.addEventListener('pointerleave',()=>ring.classList.remove('hover'));});}
 
 /* MAGNETIC */
